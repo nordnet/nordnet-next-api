@@ -1,0 +1,15 @@
+{
+  "esprima": "./node_modules/babel-jscs",
+  "preset": "airbnb",
+  "esnext": true,
+  "verbose": true,
+
+  "fileExtensions": [".js", ".jsx"],
+
+  "excludeFiles": [
+    "dist/**",
+    "node_modules/**"
+  ],
+
+  "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties"
+}
