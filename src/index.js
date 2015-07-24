@@ -13,15 +13,14 @@ const postDefaultHeaders = _.merge({
   'Content-type': 'application/x-www-form-urlencoded',
 }, defaultHeaders);
 
-const state ={
-  nTag: 'NO_NTAG_RECEIVED_YET'
+const state = {
+  nTag: 'NO_NTAG_RECEIVED_YET',
 };
 
 export function get(url, params = {}, headers = {}) {
   const options = {
     url,
     params,
-    buildQuery: true,
     headers: _.merge({}, headers, defaultHeaders),
     method: 'get',
   };
@@ -29,7 +28,7 @@ export function get(url, params = {}, headers = {}) {
   return httpFetch(options);
 }
 
-export function post(url, params, headers) {
+export function post(url, params = {}, headers = {}) {
   const options = {
     url,
     params,
@@ -40,7 +39,7 @@ export function post(url, params, headers) {
   return httpFetch(options);
 }
 
-export function put() {
+export function put(url, params = {}, headers = {}) {
   const options = {
     url,
     params,
@@ -51,11 +50,10 @@ export function put() {
   return httpFetch(options);
 }
 
-export function del() {
+export function del(url, params = {}, headers = {}) {
   const options = {
     url,
     params,
-    buildQuery: true,
     headers: _.merge({ ntag: state.nTag }, headers, defaultHeaders),
     method: 'delete',
   };
@@ -67,15 +65,17 @@ function httpFetch(options) {
   validateUrl(options.url);
 
   const path = buildPath(options.url, options.params);
-  const query = options.buildQuery ? buildQuery(_.omit(options.params, getPathParams(options.url))) : '';
-  // TODO build body
-  
+  const params = buildParams(_.omit(options.params, getPathParams(options.url)));
+
+  const query = hasQuery(options.method) ? params : undefined;
+  const body = hasBody(options.method) ? params.join('&') : undefined;
   const fetchUrl = buildUrl(path, query);
 
   const fetchParams = {
     method: options.method,
     headers: options.headers,
     credentials: 'include',
+    body: body,
   };
 
   return fetch(fetchUrl, fetchParams)
@@ -108,15 +108,10 @@ function validateUrl(url) {
 
 function getPathParams(url) {
   const keys = url.match(/{([\s\S]+?)}/g) || [];
-  return keys.reduce(getPathParam, []);
+  return keys.map(key => key.replace(/({|})/g, ''));
 }
 
-function getPathParam(result, key) {
-  result.push(key.replace(/({|})/g, ''));
-  return result;
-}
-
-function buildUrl(path, query) {
+function buildUrl(path, query = '') {
   const queryParams = query.length ? query.join('&') : '';
   const pathContainsQuery = path.indexOf('?') !== -1;
 
@@ -140,18 +135,31 @@ function matchParams(params) {
       throw new Error(`unknown parameter ${key}`);
     }
 
-    return params[key];
+    return encodeParam(params[key]);
   };
 }
 
-function buildQuery(params = {}) {
-  return Object.keys(params).reduce(buildQueryParam(params), []);
+function buildParams(params = {}) {
+  return Object.keys(params).map(key => encodeURIComponent(key) + '=' + encodeParam(params[key]));
 }
 
-function buildQueryParam(params) {
-  return function buildQueryParamKeyValue(result, key) {
-    const value = Array.isArray(params[key]) ? params[key].join(',') : params[key];
-    result.push(`${key}=${value}`);
-    return result;
-  };
+function encodeParam(value) {
+  let encoded;
+  if (Array.isArray(value)) {
+    encoded = value.join(',');
+  } else if (_.isPlainObject(value)) {
+    encoded = JSON.stringify(value);
+  } else {
+    encoded = value;
+  }
+
+  return encodeURIComponent(encoded);
+}
+
+function hasQuery(method) {
+  return method === 'get' || method === 'delete';
+}
+
+function hasBody(method) {
+  return method === 'post' || method === 'put';
 }
