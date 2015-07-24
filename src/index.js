@@ -61,6 +61,13 @@ export function del(url, params = {}, headers = {}) {
   return httpFetch(options);
 }
 
+export default {
+  get,
+  post,
+  put,
+  del
+};
+
 function httpFetch(options) {
   validateUrl(options.url);
 
@@ -69,6 +76,7 @@ function httpFetch(options) {
 
   const query = hasQuery(options.method) ? params : undefined;
   const body = hasBody(options.method) ? params.join('&') : undefined;
+
   const fetchUrl = buildUrl(path, query);
 
   const fetchParams = {
@@ -94,6 +102,7 @@ function validateStatus(response) {
 
 function saveNTag(response) {
   state.nTag = response.headers.get('ntag') || state.nTag;
+  return response;
 }
 
 function toJSON(response) {
@@ -135,15 +144,15 @@ function matchParams(params) {
       throw new Error(`unknown parameter ${key}`);
     }
 
-    return encodeParam(params[key]);
+    return uriEncode(params[key]);
   };
 }
 
 function buildParams(params = {}) {
-  return Object.keys(params).map(key => encodeURIComponent(key) + '=' + encodeParam(params[key]));
+  return Object.keys(params).map(key => encodeURIComponent(key) + '=' + uriEncode(params[key]));
 }
 
-function encodeParam(value) {
+function uriEncode(value) {
   let encoded;
   if (Array.isArray(value)) {
     encoded = value.join(',');

@@ -145,6 +145,7 @@ describe('next-api', () => {
     it('should set method \'get\'', () => expect(fetchSpy.args[0][1].method).to.equal('get'));
     it('should include credentials', () => expect(fetchSpy.args[0][1].credentials).to.equal('include'));
     it('should not set body', () => expect(fetchSpy.args[0][1].body).to.be.undefined);
+    it('should return expected response', () => expect(response).to.deep.equal({ accno: 123 }));
   });
 
   describe('post', () => {

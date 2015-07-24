@@ -1,6 +1,7 @@
 var opn = require('opn');
 var util = require('util');
 var path = require('path');
+var fs = require('fs');
 
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
@@ -17,14 +18,18 @@ new WebpackDevServer(webpack(config), {
   publicPath: config.output.publicPath,
   hot: true,
   historyApiFallback: true,
+  https: true,
   stats: {
-    colors: true
+    colors: true,
+  },
+  proxy: {
+    '/next/*': 'http://localhost:9090',
   }
 }).listen(port, host, function (err) {
   if (err) {
     console.log(err);
   }
-  var url = util.format('http://%s:%d', host, port);
+  var url = util.format('https://%s:%d', host, port);
   console.log('Listening at %s', url);
   opn(url);
 });

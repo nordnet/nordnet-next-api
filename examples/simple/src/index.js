@@ -1,4 +1,4 @@
 import React from 'react';
-import App from './components/App';
+import Status from './components/Status';
 
-React.render(<App />, document.getElementById('app'));
+React.render(<Status />, document.getElementById('app'));
