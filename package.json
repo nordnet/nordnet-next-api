@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Nordnet nExt API Javascript client",
   "main": "lib/index.js",
-  "publishConfig": {
-    "registry": "http://sinopia.prod.nordnet.se"
-  },
   "scripts": {
     "clean": "rimraf lib dist",
     "build": "babel src --out-dir lib",
@@ -13,7 +10,6 @@
     "eslint": "eslint --ext=.jsx --ext=.js -c .eslintrc src || echo \"Linting failed...\"",
     "jscs": "exit 0 || jscs -c .jscsrc src",
     "lint": "npm run jscs && npm run eslint",
-    "lint:jenkins": "npm run eslint -- -f checkstyle -o reports/lintresult.xml",
     "pretest": "rimraf reports/test-results.xml reports/coverage",
     "test": "karma start ./test/karma.conf.js --reporters mocha,junit,coverage --source-map",
     "test:debug": "karma start ./test/karma.conf.js --no-single-run --reporters mocha --browsers Chrome --source-map",
@@ -23,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://scm.prod.nordnet.se/projects/PLATFORM/repos/nordnet-next-api.git"
+    "url": "https://github.com/nordnet/nordnet-next-api.git"
   },
   "author": "Dmitry Demyankov <dmitry.demyankov@nordnet.se>",
   "license": "MIT",

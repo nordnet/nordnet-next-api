@@ -83,11 +83,10 @@ See tests under `src/__tests__` for more examples.
 
 nordnet-next-api is distributed with a two simple example projects.
 
-First, clone the repo:
+First, build the project:
 
 ```
-git clone https://github.com/nordnet/nordnet-next-api.git
-cd nordnet-next-api
+npm run build
 ```
 
 Run the client side example:
