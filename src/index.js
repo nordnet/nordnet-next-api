@@ -17,11 +17,13 @@ const state = {
   nTag: 'NO_NTAG_RECEIVED_YET',
 };
 
+const credentials = 'include';
+
 export function get(url, params = {}, headers = {}) {
   const options = {
     url,
     params,
-    headers: _.merge({}, headers, defaultHeaders),
+    headers,
     method: 'get',
   };
 
@@ -32,7 +34,7 @@ export function post(url, params = {}, headers = {}) {
   const options = {
     url,
     params,
-    headers: _.merge({ ntag: state.nTag }, headers, postDefaultHeaders),
+    headers,
     method: 'post',
   };
 
@@ -43,7 +45,7 @@ export function put(url, params = {}, headers = {}) {
   const options = {
     url,
     params,
-    headers: _.merge({ ntag: state.nTag }, headers, postDefaultHeaders),
+    headers,
     method: 'put',
   };
 
@@ -54,7 +56,7 @@ export function del(url, params = {}, headers = {}) {
   const options = {
     url,
     params,
-    headers: _.merge({ ntag: state.nTag }, headers, defaultHeaders),
+    headers,
     method: 'delete',
   };
 
@@ -65,7 +67,7 @@ export default {
   get,
   post,
   put,
-  del
+  del,
 };
 
 function httpFetch(options) {
@@ -76,14 +78,15 @@ function httpFetch(options) {
 
   const query = hasQuery(options.method) ? params : undefined;
   const body = hasBody(options.method) ? params.join('&') : undefined;
+  const headers = buildHeaders(options.method, options.headers);
 
   const fetchUrl = buildUrl(path, query);
 
   const fetchParams = {
+    headers,
+    credentials,
+    body,
     method: options.method,
-    headers: options.headers,
-    credentials: 'include',
-    body: body,
   };
 
   return fetch(fetchUrl, fetchParams)
@@ -150,6 +153,16 @@ function matchParams(params) {
 
 function buildParams(params = {}) {
   return Object.keys(params).map(key => encodeURIComponent(key) + '=' + uriEncode(params[key]));
+}
+
+function buildHeaders(method, headers) {
+  if (method === 'post' || method === 'put') {
+    return _.merge({ ntag: state.nTag }, headers, postDefaultHeaders);
+  } else if (method === 'delete') {
+    return _.merge({ ntag: state.nTag }, headers, defaultHeaders);
+  }
+
+  return _.merge({}, headers, defaultHeaders);
 }
 
 function uriEncode(value) {
