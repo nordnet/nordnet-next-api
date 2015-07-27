@@ -1,0 +1,15 @@
+{
+  "name": "nordnet-next-api-server-example",
+  "version": "1.0.0",
+  "description": "Norndet nExt API communication server example project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server.js"
+  },
+  "author": "Dmitry Demyankov",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.1"
+  }
+}

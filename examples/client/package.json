@@ -1,7 +1,7 @@
 {
-  "name": "nordnet-next-api-example",
+  "name": "nordnet-next-api-client-example",
   "version": "1.0.0",
-  "description": "Norndet nExt API communication exmaple project",
+  "description": "Norndet nExt API communication client example project",
   "config": {
     "dev_server": {
       "host": "localhost",
@@ -13,6 +13,8 @@
       "forward_to": "https://api.test.nordnet.se"
     }
   },
+  "author": "Dmitry Demyankov",
+  "license": "MIT",
   "scripts": {
     "start": "npm-run-all --parallel start:proxy start:webpack-dev-server",
     "start:proxy": "node webpack/proxy.js",
