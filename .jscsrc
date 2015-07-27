@@ -4,7 +4,7 @@
   "esnext": true,
   "verbose": true,
 
-  "fileExtensions": [".js", ".jsx"],
+  "fileExtensions": [".js"],
 
   "excludeFiles": [
     "dist/**",
