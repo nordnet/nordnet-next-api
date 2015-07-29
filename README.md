@@ -1,8 +1,8 @@
+# Nordnet nExt API Javascript client
+
+[![NPM version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
-
-Nordnet nExt API Javascript client
-==================================
-
+[![Dependency Status][depstat-image]][depstat-url]
 
 Isomorphic JS client for [Nordnet nExt API][api]. Client can be used both on the client and server side. Client should be used for making HTTP requests towards nExt API. See [nExt API documentation][api-docs] for a list of possible requests.
 
@@ -111,6 +111,11 @@ npm start
 
 All open source code released by Nordnet is licenced under the MIT licence.
 
+[npm-url]: https://npmjs.org/package/nordnet-next-api
+[npm-image]: https://img.shields.io/npm/v/nordnet-next-api.svg
 
 [travis-url]: https://travis-ci.org/nordnet/nordnet-next-api
 [travis-image]: https://travis-ci.org/nordnet/nordnet-next-api.svg?branch=master
+
+[depstat-url]: https://david-dm.org/nordnet/nordnet-next-api
+[depstat-image]: https://david-dm.org/nordnet/nordnet-next-api.svg
