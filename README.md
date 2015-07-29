@@ -6,8 +6,6 @@
 
 Isomorphic JS client for [Nordnet nExt API][api]. Client can be used both on the client and server side. Client should be used for making HTTP requests towards nExt API. See [nExt API documentation][api-docs] for a list of possible requests.
 
-[api]: https://api.test.nordnet.se/
-[api-docs]: https://api.test.nordnet.se/api-docs/index.html
 
 ## Installation
 
@@ -41,6 +39,9 @@ app.get('/', function (req, res) {
   })
 });
 ```
+
+Authentication is required to be able to use nExt API. `Authorization` header can be used to pass session token when communicating to the API.
+See [nExt API documentation][api] for more details on how to get test account and authenticate against nExt API.
 
 ### Basic usage
 
@@ -110,6 +111,10 @@ npm start
 ## License
 
 All open source code released by Nordnet is licenced under the MIT licence.
+
+
+[api]: https://api.test.nordnet.se/
+[api-docs]: https://api.test.nordnet.se/api-docs/index.html
 
 [npm-url]: https://npmjs.org/package/nordnet-next-api
 [npm-image]: https://img.shields.io/npm/v/nordnet-next-api.svg
