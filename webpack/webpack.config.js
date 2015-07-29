@@ -27,7 +27,7 @@ module.exports = {
     }]
   },
   output: {
-    library: 'library-boilerplate',
+    library: 'norndet-next-api',
     libraryTarget: 'umd'
   },
   plugins: plugins,
