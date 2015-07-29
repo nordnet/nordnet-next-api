@@ -15,7 +15,10 @@
     "test:debug": "karma start ./test/karma.conf.js --no-single-run --reporters mocha --browsers Chrome --source-map",
     "test:tdd": "karma start ./test/karma.conf.js --auto-watch --no-single-run ",
     "validate": "npm run lint && npm test",
-    "prepush": "npm run validate"
+    "prebuild": "npm run validate",
+    "prepush": "npm run validate",
+    "prepublish": "npm run build",
+    "postpublish": "rimraf lib && git push --follow-tags"
   },
   "repository": {
     "type": "git",
