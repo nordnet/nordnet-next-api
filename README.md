@@ -1,3 +1,5 @@
+[![Build Status][travis-image]][travis-url]
+
 Nordnet nExt API Javascript client
 ==================================
 
@@ -108,3 +110,7 @@ npm start
 ## License
 
 All open source code released by Nordnet is licenced under the MIT licence.
+
+
+[travis-url]: https://travis-ci.org/nordnet/nordnet-next-api
+[travis-image]: https://travis-ci.org/nordnet/nordnet-next-api.svg?branch=master
