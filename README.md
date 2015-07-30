@@ -110,7 +110,7 @@ npm start
 
 ## License
 
-All open source code released by Nordnet is licenced under the MIT licence.
+This open source project released by Nordnet is licenced under the MIT licence.
 
 
 [api]: https://api.test.nordnet.se/
