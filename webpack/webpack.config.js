@@ -27,7 +27,7 @@ module.exports = {
     }]
   },
   output: {
-    library: 'norndet-next-api',
+    library: 'nordnet-next-api',
     libraryTarget: 'umd'
   },
   plugins: plugins,
