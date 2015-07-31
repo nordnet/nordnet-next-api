@@ -52,6 +52,17 @@ api.get('https://api.test.nordnet.se/next/2/accounts/{accno}', { accno: 12345678
   .then(response => console.log(response));
 ```
 
+### Setting root URL before querying
+
+```js
+import api from 'nordnet-next-api';
+
+api.setConfig({root:'https://api.test.nordnet.se/next/2'});
+
+api.get('/accounts/{accno}', { accno: 123456789 })
+  .then(response => console.log(response));
+```
+
 ### Passing path parameters
 
 ```js
@@ -86,9 +97,10 @@ See tests under `src/__tests__` for more examples.
 
 nordnet-next-api is distributed with a two simple example projects.
 
-First, build the project:
+Before proceeding, install dependencies and build the project:
 
 ```
+npm install
 npm run build
 ```
 
@@ -110,7 +122,7 @@ npm start
 
 ## License
 
-This open source project released by Nordnet is licenced under the MIT licence.
+This Open Source project released by Nordnet is licensed under the MIT license.
 
 
 [api]: https://api.test.nordnet.se/
