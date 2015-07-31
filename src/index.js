@@ -19,6 +19,21 @@ const state = {
 
 const credentials = 'include';
 
+let config = {};
+
+export function setConfig(options) {
+  // Currently supported config options
+  let configKeys = [
+    'root',
+  ];
+
+  for (let key in options) {
+    if (configKeys.indexOf(key) !== -1) {
+      config[key] = options[key];
+    }
+  }
+}
+
 export function get(url, params = {}, headers = {}) {
   const options = {
     url,
@@ -68,6 +83,7 @@ export default {
   post,
   put,
   del,
+  setConfig,
 };
 
 function httpFetch(options) {
@@ -126,6 +142,12 @@ function getPathParams(url) {
 function buildUrl(path, query = '') {
   const queryParams = query.length ? query.join('&') : '';
   const pathContainsQuery = path.indexOf('?') !== -1;
+  const pathContainsProtocol = !!(path.match(/^http(s)?:\/\//));
+
+  let root = '';
+  if (!pathContainsProtocol && typeof config.root !== 'undefined') {
+    root = config.root;
+  }
 
   let delimiter = '';
   if (pathContainsQuery) {
@@ -134,7 +156,7 @@ function buildUrl(path, query = '') {
     delimiter = '?';
   }
 
-  return `${path}${delimiter}${queryParams}`;
+  return `${root}${path}${delimiter}${queryParams}`;
 }
 
 function buildPath(url, params) {

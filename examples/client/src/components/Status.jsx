@@ -1,10 +1,11 @@
 import React from 'react';
-import { get } from 'nordnet-next-api';
+import { get, setConfig } from 'nordnet-next-api';
 
 class Status extends React.Component {
 
   componentDidMount() {
-    get('/next/2/')
+    setConfig({root: 'https://api.test.nordnet.se/next/2'});
+    get('/')
       .then(response => this.setState({ status: response }));
   }
 
