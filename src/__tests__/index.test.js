@@ -1,9 +1,6 @@
 import 'test-helper';
 import { expect } from 'chai';
-import { get } from './../index';
-import { post } from './../index';
-import { put } from './../index';
-import { del } from './../index';
+import { get, post, put, del } from './../index';
 
 describe('next-api', () => {
   const ntag = 'qwerty-12345-6789';
@@ -42,6 +39,7 @@ describe('next-api', () => {
       [200, { 'Content-Type': 'application/json; charset=UTF-8', ntag: ntag }, JSON.stringify([{ key: 'bar', value: { bar: 'bar' }}])]);
     sandbox.server.respondWith('DELETE', '/next/2/user/settings/bar',
       [200, { 'Content-Type': 'application/json; charset=UTF-8', ntag: ntag }, '']);
+    sandbox.server.respondWith('/next/2/news?days=0', JSON.stringify([{ news_id: 1 }]));
   }
 
   function initSpies() {
@@ -146,6 +144,11 @@ describe('next-api', () => {
     it('should include credentials', () => expect(fetchSpy.args[0][1].credentials).to.equal('include'));
     it('should not set body', () => expect(fetchSpy.args[0][1].body).to.be.undefined);
     it('should return expected response', () => expect(response).to.deep.equal({ accno: 123 }));
+  });
+
+  describe('get with query params', () => {
+    beforeEach(settle(get, '/next/2/news?days={days}', { days: 0 }));
+    it('should return expected response', () => expect(response).to.deep.equal([{ news_id: 1 }]));
   });
 
   describe('post', () => {

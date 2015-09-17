@@ -128,7 +128,7 @@ function buildUrl(path, query = '') {
   const pathContainsQuery = path.indexOf('?') !== -1;
 
   let delimiter = '';
-  if (pathContainsQuery) {
+  if (pathContainsQuery && queryParams) {
     delimiter = '&';
   } else if (queryParams) {
     delimiter = '?';
@@ -143,7 +143,7 @@ function buildPath(url, params) {
 
 function matchParams(params) {
   return function matchParamKeyValue(match, key) {
-    if (!params[key]) {
+    if (params[key] === undefined) {
       throw new Error(`unknown parameter ${key}`);
     }
 
