@@ -24,10 +24,7 @@ import api from 'nordnet-next-api';
 
 api
   .get('https://api.test.nordnet.se/next/2')
-  .then(({ status, data }) => {
-    console.log(status);
-    console.log(data);
-  });
+  .then(({ status, data }) => console.log(status, data));
 ```
 
 ```js
@@ -51,11 +48,9 @@ See [nExt API documentation][api] for more details on how to get test account an
 ```js
 import api from 'nordnet-next-api';
 
-api.get('https://api.test.nordnet.se/next/2/accounts/{accno}', { accno: 123456789 })
-  .then(({ status, data }) => {
-    console.log(status);
-    console.log(data);
-  });
+api
+  .get('https://api.test.nordnet.se/next/2/accounts/{accno}', { accno: 123456789 })
+  .then(({ status, data }) => console.log(status, data));
 ```
 
 Returned response contains status (HTTP response status) and data (JSON parsed response).
@@ -63,37 +58,37 @@ Returned response contains status (HTTP response status) and data (JSON parsed r
 ### Passing path parameters
 
 ```js
-import api from 'nordnet-next-api';
+import { get } from 'nordnet-next-api';
 
-api.get('https://api.test.nordnet.se/next/2/accounts/{accno}', { accno: 123456789 })
-  .then(({ status, data }) => {
-    console.log(status);
-    console.log(data);
-  });
+get('https://api.test.nordnet.se/next/2/accounts/{accno}', { accno: 123456789 })
+  .then(({ status, data }) => console.log(status, data));
+```
+
+### Passing query parameters
+
+```js
+import { get } from 'nordnet-next-api';
+
+get('https://api.test.nordnet.se/next/2/news?days={days}', { days: 0 })
+  .then(({ status, data }) => console.log(status, data));
 ```
 
 ### Passing POST parameters
 
 ```js
-import api from 'nordnet-next-api';
+import { post } from 'nordnet-next-api';
 
-api.get('https://api.test.nordnet.se/next/2/user/{key}', { key: 'foo', value: { bar: 'bar' }})
-  .then(({ status, data }) => {
-    console.log(status);
-    console.log(data);
-  });
+post('https://api.test.nordnet.se/next/2/user/{key}', { key: 'foo', value: { bar: 'bar' }})
+  .then(({ status, data }) => console.log(status, data));
 ```
 
 ### Passing additional headers
 
 ```js
-import api from 'nordnet-next-api';
+import { get } from 'nordnet-next-api';
 
-api.get('https://api.test.nordnet.se/next/2/markets/{market_id}', { market_id: 80 }, { 'Accept-Language': 'sv' })
-  .then(({ status, data }) => {
-    console.log(status);
-    console.log(data);
-  });
+get('https://api.test.nordnet.se/next/2/markets/{market_id}', { market_id: 11 }, { 'Accept-Language': 'sv' })
+  .then(({ status, data }) => console.log(status, data));
 ```
 
 See tests under `src/__tests__` for more examples.
