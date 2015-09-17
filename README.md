@@ -24,7 +24,10 @@ import api from 'nordnet-next-api';
 
 api
   .get('https://api.test.nordnet.se/next/2')
-  .then(response => console.log(response));
+  .then(({ status, data }) => {
+    console.log(status);
+    console.log(data);
+  });
 ```
 
 ```js
@@ -49,8 +52,13 @@ See [nExt API documentation][api] for more details on how to get test account an
 import api from 'nordnet-next-api';
 
 api.get('https://api.test.nordnet.se/next/2/accounts/{accno}', { accno: 123456789 })
-  .then(response => console.log(response));
+  .then(({ status, data }) => {
+    console.log(status);
+    console.log(data);
+  });
 ```
+
+Returned response contains status (HTTP response status) and data (JSON parsed response).
 
 ### Passing path parameters
 
@@ -58,7 +66,10 @@ api.get('https://api.test.nordnet.se/next/2/accounts/{accno}', { accno: 12345678
 import api from 'nordnet-next-api';
 
 api.get('https://api.test.nordnet.se/next/2/accounts/{accno}', { accno: 123456789 })
-  .then(response => console.log(response));
+  .then(({ status, data }) => {
+    console.log(status);
+    console.log(data);
+  });
 ```
 
 ### Passing POST parameters
@@ -67,7 +78,10 @@ api.get('https://api.test.nordnet.se/next/2/accounts/{accno}', { accno: 12345678
 import api from 'nordnet-next-api';
 
 api.get('https://api.test.nordnet.se/next/2/user/{key}', { key: 'foo', value: { bar: 'bar' }})
-  .then(response => console.log(response));
+  .then(({ status, data }) => {
+    console.log(status);
+    console.log(data);
+  });
 ```
 
 ### Passing additional headers
@@ -76,7 +90,10 @@ api.get('https://api.test.nordnet.se/next/2/user/{key}', { key: 'foo', value: { 
 import api from 'nordnet-next-api';
 
 api.get('https://api.test.nordnet.se/next/2/markets/{market_id}', { market_id: 80 }, { 'Accept-Language': 'sv' })
-  .then(response => console.log(response));
+  .then(({ status, data }) => {
+    console.log(status);
+    console.log(data);
+  });
 ```
 
 See tests under `src/__tests__` for more examples.

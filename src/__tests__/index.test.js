@@ -137,18 +137,30 @@ describe('next-api', () => {
   });
 
   describe('get', () => {
-    beforeEach(settle(get, '/next/2/accounts/{accno}', { accno: 123 }, { 'Accept-Language': 'sv' }));
+    describe('accounts', () => {
+      beforeEach(settle(get, '/next/2/accounts/{accno}', { accno: 123 }, { 'Accept-Language': 'sv' }));
 
-    it('should set expected headers', () => expectHeaders({ Accept: 'application/json', 'Accept-Language': 'sv' }));
-    it('should set method \'get\'', () => expect(fetchSpy.args[0][1].method).to.equal('get'));
-    it('should include credentials', () => expect(fetchSpy.args[0][1].credentials).to.equal('include'));
-    it('should not set body', () => expect(fetchSpy.args[0][1].body).to.be.undefined);
-    it('should return expected response', () => expect(response).to.deep.equal({ accno: 123 }));
-  });
+      it('should set expected headers', () => expectHeaders({ Accept: 'application/json', 'Accept-Language': 'sv' }));
+      it('should set method \'get\'', () => expect(fetchSpy.args[0][1].method).to.equal('get'));
+      it('should include credentials', () => expect(fetchSpy.args[0][1].credentials).to.equal('include'));
+      it('should not set body', () => expect(fetchSpy.args[0][1].body).to.be.undefined);
+      it('should return expected status', () => expect(response.status).to.equal(200));
+      it('should return expected response data', () => expect(response.data).to.deep.equal({ accno: 123 }));
+    });
 
-  describe('get with query params', () => {
-    beforeEach(settle(get, '/next/2/news?days={days}', { days: 0 }));
-    it('should return expected response', () => expect(response).to.deep.equal([{ news_id: 1 }]));
+    describe('news', () => {
+      beforeEach(settle(get, '/next/2/news?days={days}', { days: 0 }));
+
+      it('should return expected status', () => expect(response.status).to.equal(200));
+      it('should return expected response data', () => expect(response.data).to.deep.equal([{ news_id: 1 }]));
+    });
+
+    describe('settings', () => {
+      beforeEach(settle(get, '/next/2/user/settings/{foo}', { foo: 'foo' }));
+
+      it('should return expected status', () => expect(response.status).to.equal(204));
+      it('should return expected response data', () => expect(response.data).to.be.undefined);
+    });
   });
 
   describe('post', () => {

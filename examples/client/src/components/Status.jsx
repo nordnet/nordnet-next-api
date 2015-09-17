@@ -5,7 +5,7 @@ class Status extends React.Component {
 
   componentDidMount() {
     get('/next/2/')
-      .then(response => this.setState({ status: response }));
+      .then(({ data }) => this.setState({ status: data }));
   }
 
   render() {

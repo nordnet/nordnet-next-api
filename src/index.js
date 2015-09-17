@@ -109,7 +109,13 @@ function saveNTag(response) {
 }
 
 function toJSON(response) {
-  return response.json();
+  if (response.status === 204) {
+    return { status: response.status };
+  }
+
+  return response.json().then(json => {
+    return { status: response.status, data: json };
+  });
 }
 
 function validateUrl(url) {
