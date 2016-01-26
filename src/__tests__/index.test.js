@@ -179,9 +179,20 @@ describe('next-api', () => {
     describe('when making POST request', () => {
       beforeEach(settle(post, '/next/2/user/settings/{key}', { key: 'bar', value: { bar: 'bar' }}, { 'Accept-Language': 'sv' }));
 
-      it('should set ntag header', () =>
+      it('should set expected headers', () =>
         expect(fetchSpy.args[1][1].headers).to.deep.equal(
           { 'Content-type': 'application/x-www-form-urlencoded', Accept: 'application/json', 'Accept-Language': 'sv', ntag: ntag }));
+      it('should set method \'post\'', () => expect(fetchSpy.args[1][1].method).to.equal('post'));
+      it('should include credentials', () => expect(fetchSpy.args[1][1].credentials).to.equal('include'));
+    });
+
+    describe('when making POST request with custom Content-type header', () => {
+      beforeEach(settle(post, '/next/2/user/lists/{list_id}/{instrument_id}',
+        { list_id: 1, instrument_id: 101}, { 'Accept-Language': 'sv', 'Content-type': 'application/json' }));
+
+      it('should set expected headers', () =>
+        expect(fetchSpy.args[1][1].headers).to.deep.equal(
+          { 'Content-type': 'application/json', Accept: 'application/json', 'Accept-Language': 'sv', ntag: ntag }));
       it('should set method \'post\'', () => expect(fetchSpy.args[1][1].method).to.equal('post'));
       it('should include credentials', () => expect(fetchSpy.args[1][1].credentials).to.equal('include'));
     });

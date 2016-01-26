@@ -163,9 +163,9 @@ function buildParams(params = {}) {
 
 function buildHeaders(method, headers) {
   if (method === 'post' || method === 'put') {
-    return _.merge({ ntag: state.nTag }, headers, postDefaultHeaders);
+    return _.merge({ ntag: state.nTag }, postDefaultHeaders, headers);
   } else if (method === 'delete') {
-    return _.merge({ ntag: state.nTag }, headers, defaultHeaders);
+    return _.merge({ ntag: state.nTag }, defaultHeaders, headers);
   }
 
   return _.merge({}, headers, defaultHeaders);
