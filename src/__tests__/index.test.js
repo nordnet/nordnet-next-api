@@ -45,14 +45,9 @@ function testMethodThrows(condition) {
 }
 
 describe('api', function() {
-  const ntag = 'qwerty-12345-6789';
-
   describe('when url is invalid', testThrows([undefined, '', '/api/2/accounts/{accno}']));
   describe('when request succeeded', test(tests.getInstrument));
   describe('when request failed', test(tests.getAccounts));
   describe('when response is not JSON', test(tests.ping));
-
-  describe('when making POST request', function() {
-
-  });
+  describe('when making POST request with JSON payload', test(tests.postUserSettings));
 });

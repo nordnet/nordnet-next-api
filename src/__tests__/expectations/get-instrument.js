@@ -1,10 +1,13 @@
 import api from '../../index';
 
+const params = { instrument_id: 123, positions: [456, 789], accno: 987 };
+const headers = { 'Accept-Language': 'sv' };
+
 export default {
   conditions: {
     request: [
       api.get,
-      ['/api/2/instruments/{instrument_id}?positions={positions}', { instrument_id: 123, positions: [456, 789], accno: 987 }, { 'Accept-Language': 'sv' }],
+      ['/api/2/instruments/{instrument_id}?positions={positions}', params, headers],
     ],
     response: [
       'GET',
