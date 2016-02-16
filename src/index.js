@@ -198,7 +198,7 @@ function buildBody(method, params, headers) {
     return;
   }
 
-  return isJsonContentType(headers) ? JSON.stringify(params) : params.join('&');
+  return isJsonContentType(headers) ? JSON.stringify(params) : buildParams(params).join('&');
 }
 
 function isJsonContentType(headers) {

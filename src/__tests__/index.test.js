@@ -49,5 +49,6 @@ describe('api', function() {
   describe('when request succeeded', test(tests.getInstrument));
   describe('when request failed', test(tests.getAccounts));
   describe('when response is not JSON', test(tests.ping));
+  describe('when making POST request', test(tests.postUserLists));
   describe('when making POST request with JSON payload', test(tests.postUserSettings));
 });
