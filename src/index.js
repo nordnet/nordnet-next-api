@@ -3,7 +3,12 @@ import es6Promise from 'es6-promise';
 es6Promise.polyfill();
 
 import 'isomorphic-fetch';
-import _ from 'lodash';
+
+import merge from 'lodash/object/merge';
+import omit from 'lodash/object/omit';
+import keys from 'lodash/object/keys';
+import find from 'lodash/collection/find';
+import isPlainObject from 'lodash/lang/isPlainObject';
 
 const HTTP_NO_CONTENT = 204;
 const HTTP_BAD_REQUEST = 400;
@@ -13,7 +18,7 @@ const defaultHeaders = {
   Accept: 'application/json',
 };
 
-const postDefaultHeaders = _.merge({
+const postDefaultHeaders = merge({
   'Content-type': 'application/x-www-form-urlencoded',
 }, defaultHeaders);
 
@@ -78,11 +83,11 @@ function httpFetch(options) {
   validateUrl(options.url);
 
   const path = buildPath(options.url, options.params);
-  const params = buildParams(_.omit(options.params, getPathParams(options.url)));
+  const params = buildParams(omit(options.params, getPathParams(options.url)));
 
   const query = hasQuery(options.method) ? params : undefined;
-  const body = hasBody(options.method) ? params.join('&') : undefined;
   const headers = buildHeaders(options.method, options.headers);
+  const body = buildBody(options.method, params, headers);
 
   const fetchUrl = buildUrl(path, query);
 
@@ -132,7 +137,7 @@ function parseContent(response) {
 }
 
 function isJSON(contentType) {
-  return !!contentType && contentType.toLowerCase().indexOf('application/json') !== -1;
+  return contains('application/json')(contentType);
 }
 
 function validateUrl(url) {
@@ -180,19 +185,32 @@ function buildParams(params = {}) {
 
 function buildHeaders(method, headers) {
   if (method === 'post' || method === 'put') {
-    return _.merge({ ntag: state.nTag }, postDefaultHeaders, headers);
+    return merge({ ntag: state.nTag }, postDefaultHeaders, headers);
   } else if (method === 'delete') {
-    return _.merge({ ntag: state.nTag }, defaultHeaders, headers);
+    return merge({ ntag: state.nTag }, defaultHeaders, headers);
   }
 
-  return _.merge({}, headers, defaultHeaders);
+  return merge({}, headers, defaultHeaders);
+}
+
+function buildBody(method, params, headers) {
+  if (!hasBody(method)) {
+    return;
+  }
+
+  return isJsonContentType(headers) ? JSON.stringify(params) : params.join('&');
+}
+
+function isJsonContentType(headers) {
+  const contentType = find(keys(headers), contains('content-type'));
+  return isJSON(headers[contentType]);
 }
 
 function uriEncode(value) {
   let encoded;
   if (Array.isArray(value)) {
     encoded = value.join(',');
-  } else if (_.isPlainObject(value)) {
+  } else if (isPlainObject(value)) {
     encoded = JSON.stringify(value);
   } else {
     encoded = value;
@@ -207,4 +225,10 @@ function hasQuery(method) {
 
 function hasBody(method) {
   return method === 'post' || method === 'put';
+}
+
+function contains(string) {
+  return function(value) {
+    return !!value && value.toLowerCase().indexOf(string) !== -1;
+  };
 }
