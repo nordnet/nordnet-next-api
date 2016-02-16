@@ -83,9 +83,9 @@ function httpFetch(options) {
   validateUrl(options.url);
 
   const path = buildPath(options.url, options.params);
-  const params = buildParams(omit(options.params, getPathParams(options.url)));
+  const params = omit(options.params, getPathParams(options.url));
 
-  const query = hasQuery(options.method) ? params : undefined;
+  const query = hasQuery(options.method) ? buildParams(params) : undefined;
   const headers = buildHeaders(options.method, options.headers);
   const body = buildBody(options.method, params, headers);
 
@@ -198,7 +198,7 @@ function buildBody(method, params, headers) {
     return;
   }
 
-  return isJsonContentType(headers) ? JSON.stringify(params) : params.join('&');
+  return isJsonContentType(headers) ? JSON.stringify(params) : buildParams(params).join('&');
 }
 
 function isJsonContentType(headers) {
