@@ -26,11 +26,10 @@ describe('next-api', () => {
   }
 
   function initResponses() {
-    sandbox.server.respondWith('/next/2/accounts', JSON.stringify([{ accno: 123 }]));
-    sandbox.server.respondWith('/next/2/accounts/123', JSON.stringify({ accno: 123 }));
+    sandbox.server.respondWith('/next/2/accounts', [200, { 'Content-Type': 'application/json; charset=UTF-8', ntag: ntag }, JSON.stringify([{ accno: 123 }])]);
+    sandbox.server.respondWith('/next/2/accounts/123', [200, { 'Content-Type': 'application/json; charset=UTF-8', ntag: ntag }, JSON.stringify({ accno: 123 })]);
     sandbox.server.respondWith('/next/2/accounts/456', [401, {}, '']);
     sandbox.server.respondWith('/next/2/instruments/123?positions=456,789&accno=987', JSON.stringify({ instrument_id: 123 }));
-    sandbox.server.respondWith('/next/2/accounts/123', JSON.stringify({ accno: 123 }));
     sandbox.server.respondWith('GET', '/next/2/user/settings/foo',
       [204, { 'Content-Type': 'application/json; charset=UTF-8', ntag: ntag }, '']);
     sandbox.server.respondWith('POST', '/next/2/user/settings/bar',
@@ -39,7 +38,7 @@ describe('next-api', () => {
       [200, { 'Content-Type': 'application/json; charset=UTF-8', ntag: ntag }, JSON.stringify([{ key: 'bar', value: { bar: 'bar' }}])]);
     sandbox.server.respondWith('DELETE', '/next/2/user/settings/bar',
       [200, { 'Content-Type': 'application/json; charset=UTF-8', ntag: ntag }, '']);
-    sandbox.server.respondWith('/next/2/news?days=0', JSON.stringify([{ news_id: 1 }]));
+    sandbox.server.respondWith('/next/2/news?days=0', [200, { 'Content-Type': 'application/json; charset=UTF-8', ntag: ntag }, JSON.stringify([{ news_id: 1 }])]);
   }
 
   function initSpies() {

@@ -5,6 +5,10 @@ es6Promise.polyfill();
 import 'isomorphic-fetch';
 import _ from 'lodash';
 
+const HTTP_NO_CONTENT = 204;
+const HTTP_BAD_REQUEST = 400;
+const HTTP_OK = 200;
+
 const defaultHeaders = {
   Accept: 'application/json',
 };
@@ -92,15 +96,19 @@ function httpFetch(options) {
   return fetch(fetchUrl, fetchParams)
     .then(validateStatus)
     .then(saveNTag)
-    .then(toJSON);
+    .then(processResponse);
 }
 
 function validateStatus(response) {
-  if (response.status >= 200 && response.status < 300) {
-    return Promise.resolve(response);
+  if (response.status < HTTP_BAD_REQUEST) {
+    return response;
   }
 
-  return Promise.reject(response);
+  return toErrorResponse(response);
+}
+
+function toErrorResponse(response) {
+  return parseContent(response).then(response => Promise.reject(response));
 }
 
 function saveNTag(response) {
@@ -108,14 +116,23 @@ function saveNTag(response) {
   return response;
 }
 
-function toJSON(response) {
-  if (response.status === 204) {
+function processResponse(response) {
+  if (response.status === HTTP_NO_CONTENT) {
     return { status: response.status };
   }
 
-  return response.json().then(json => {
-    return { status: response.status, data: json };
-  });
+  return parseContent(response);
+}
+
+function parseContent(response) {
+  const contentType = response.headers.get('Content-type');
+  const method = isJSON(contentType) ? 'json' : 'text';
+
+  return response[method]().then(data => ({ data, status: response.status }));
+}
+
+function isJSON(contentType) {
+  return !!contentType && contentType.toLowerCase().indexOf('application/json') !== -1;
 }
 
 function validateUrl(url) {
