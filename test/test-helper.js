@@ -30,25 +30,33 @@ function expectUrl(url) {
 }
 
 function expectHeaders(headers) {
-  expect(this.fetchSpy.args[0][1].headers).to.deep.equal(headers);
+  expectDeepEqual(headers, this.fetchSpy.args[0][1].headers);
 }
 
 function expectMethod(method) {
-  expect(this.fetchSpy.args[0][1].method).to.equal(method);
+  expectEqual(method, this.fetchSpy.args[0][1].method);
 }
 
 function expectCredentials() {
-  expect(this.fetchSpy.args[0][1].credentials).to.equal('include');
+  expectEqual('include', this.fetchSpy.args[0][1].credentials);
 }
 
 function expectBody(body) {
-  expect(this.fetchSpy.args[0][1].body).to.deep.equal(body);
+  expectDeepEqual(body, this.fetchSpy.args[0][1].body);
 }
 
 function expectStatus(status) {
-  expect(this.response.status).to.equal(status);
+  expectEqual(status, this.response.status);
 }
 
 function expectData(data) {
-  expect(this.response.data).to.deep.equal(data);
+  expectDeepEqual(data, this.response.data);
+}
+
+function expectEqual(expected, actual) {
+  expect(actual).to.equal(expected);
+}
+
+function expectDeepEqual(expected, actual) {
+  expect(actual).to.deep.equal(expected);
 }
