@@ -1,6 +1,5 @@
 import { initSandBox, respondWith, execute, expectations } from 'test-helper';
 import tests from './expectations';
-
 import api from '../index';
 import { expect } from 'chai';
 
