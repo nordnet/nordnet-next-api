@@ -73,6 +73,7 @@ var karmaConf = {
   frameworks: [ 'mocha', 'chai', 'sinon-chai'], //use the mocha test framework
 
   files: [
+    '../node_modules/babel-polyfill/dist/polyfill.js',
     'tests.webpack.js' //just load this file
   ],
 
