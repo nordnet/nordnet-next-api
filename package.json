@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "clean": "rimraf lib dist",
-    "build": "babel src --out-dir lib",
+    "build": "babel --presets es2015 --plugin add-module-exports src --out-dir lib",
     "build:umd": "webpack --config ./webpack/webpack.config src/index.js dist/nordnet-next-api.js && NODE_ENV=production webpack --config ./webpack/webpack.config src/index.js dist/nordnet-next-api.min.js",
     "eslint": "eslint src || echo \"Linting failed...\"",
     "lint": "npm run eslint",
