@@ -1,6 +1,6 @@
 {
   "name": "nordnet-next-api",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "description": "Nordnet nExt API Javascript client",
   "main": "lib/index.js",
   "scripts": {
