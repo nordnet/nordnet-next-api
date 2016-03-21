@@ -14,18 +14,18 @@ function init(done, { request, response }) {
 
 function verifyExpectations(expected) {
   Object.keys(expected)
-    .forEach(key => it(`should have expected ${key}`, function() {
+    .forEach(key => it(`should have expected ${key}`, function () {
       expectations[key].call(this, expected[key]);
     }));
 }
 
 function test({ conditions, expected }) {
-  return function() {
-    beforeEach(function(done) {
+  return function () {
+    beforeEach(function (done) {
       init.call(this, done, conditions);
     });
 
-    afterEach(function() {
+    afterEach(function () {
       this.sandbox.restore();
     });
 
@@ -34,7 +34,7 @@ function test({ conditions, expected }) {
 }
 
 function testThrows(conditions) {
-  return function() {
+  return function () {
     conditions.forEach(condition => Object.keys(api).forEach(testMethodThrows(condition)));
   };
 }
@@ -44,7 +44,7 @@ function testMethodThrows(condition) {
       () => expect(() => api[method](condition)).to.throw(Error));
 }
 
-describe('api', function() {
+describe('api', function () {
   describe('when url is invalid', testThrows([undefined, '', '/api/2/accounts/{accno}']));
   describe('when request succeeded', test(tests.getInstrument));
   describe('when request failed', test(tests.getAccounts));

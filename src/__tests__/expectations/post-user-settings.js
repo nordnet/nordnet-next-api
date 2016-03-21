@@ -1,6 +1,6 @@
 import api from '../../index';
 
-const params = { key: 1, settings: { widgets: [{ id: 1, name: 'winners/losers' }] }};
+const params = { key: 1, settings: { widgets: [{ id: 1, name: 'winners/losers' }] } };
 const headers = { 'content-type': 'application/json' };
 
 export default {

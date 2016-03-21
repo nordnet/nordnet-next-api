@@ -2,7 +2,7 @@ import api from '../../index';
 
 const name = 'abc';
 const params = { name };
-const response = { id: 1, name }
+const response = { id: 1, name };
 
 export default {
   conditions: {

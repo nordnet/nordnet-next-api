@@ -34,7 +34,11 @@ var webpackConf = {
   module: {
     preLoaders: runCodeCoverage ? codeCoverageLoaders : [],
     loaders: [
-      { test: /\.js[x]?$/, loader: 'babel-loader', exclude: /node_module/ }
+      {
+        test: /\.js[x]?$/,
+        loader: 'babel?presets[]=es2015&plugins[]=add-module-exports',
+        exclude: /node_module/
+      }
     ]
   },
   plugins: [

@@ -1,4 +1,4 @@
-import 'babel-core/polyfill';
+import 'babel-polyfill';
 import es6Promise from 'es6-promise';
 
 es6Promise.polyfill();
@@ -7,7 +7,6 @@ import 'isomorphic-fetch';
 
 const HTTP_NO_CONTENT = 204;
 const HTTP_BAD_REQUEST = 400;
-const HTTP_OK = 200;
 
 const defaultHeaders = {
   accept: 'application/json',
@@ -108,7 +107,7 @@ function validateStatus(response) {
 }
 
 function toErrorResponse(response) {
-  return parseContent(response).then(response => Promise.reject(response));
+  return parseContent(response).then(res => Promise.reject(res));
 }
 
 function saveNTag(response) {
@@ -194,12 +193,12 @@ function keyToLowerCase(obj) {
   return (accumulator, key) => {
     accumulator[key.toLowerCase()] = obj[key];
     return accumulator;
-  }
+  };
 }
 
 function buildBody(method, params, headers) {
   if (!hasBody(method)) {
-    return;
+    return undefined;
   }
 
   return isJsonContentType(headers) ? JSON.stringify(params) : buildParams(params).join('&');
@@ -232,7 +231,7 @@ function hasBody(method) {
 }
 
 function contains(string) {
-  return function(value) {
+  return function (value) {
     return !!value && value.toLowerCase().indexOf(string) !== -1;
   };
 }
