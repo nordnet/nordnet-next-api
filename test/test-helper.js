@@ -23,6 +23,7 @@ export const expectations = {
   body: expectBody,
   status: expectStatus,
   data: expectData,
+  response: expectResponse,
 };
 
 function expectUrl(url) {
@@ -51,6 +52,10 @@ function expectStatus(status) {
 
 function expectData(data) {
   expectDeepEqual(data, this.response.data);
+}
+
+function expectResponse() {
+  expect(this.response.response).to.not.be.undefined;
 }
 
 function expectEqual(expected, actual) {

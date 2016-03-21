@@ -123,7 +123,7 @@ function saveNTag(response) {
 
 function processResponse(response) {
   if (response.status === HTTP_NO_CONTENT) {
-    return { status: response.status };
+    return { response, status: response.status };
   }
 
   return parseContent(response);
@@ -133,7 +133,7 @@ function parseContent(response) {
   const contentType = response.headers.get('Content-type');
   const method = isJSON(contentType) ? 'json' : 'text';
 
-  return response[method]().then(data => ({ data, status: response.status }));
+  return response[method]().then(data => ({ response, data, status: response.status }));
 }
 
 function isJSON(contentType) {

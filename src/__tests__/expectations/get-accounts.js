@@ -20,5 +20,6 @@ export default {
     body: undefined,
     status: 401,
     data: { code: 'NEXT_INVALID_SESSION' },
+    response: true,
   },
 };

@@ -24,5 +24,6 @@ export default {
     body: `name=${name}`,
     status: 201,
     data: response,
+    response: true,
   },
 };

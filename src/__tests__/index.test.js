@@ -14,7 +14,7 @@ function init(done, { request, response }) {
 
 function verifyExpectations(expected) {
   Object.keys(expected)
-    .forEach(key => it(`should fetch with expected ${key}`, function() {
+    .forEach(key => it(`should have expected ${key}`, function() {
       expectations[key].call(this, expected[key]);
     }));
 }

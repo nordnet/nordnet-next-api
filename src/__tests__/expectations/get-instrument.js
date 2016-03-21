@@ -23,5 +23,6 @@ export default {
     body: undefined,
     status: 200,
     data: { instrument_id: 123 },
+    response: true,
   },
 };

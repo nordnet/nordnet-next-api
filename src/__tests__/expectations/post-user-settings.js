@@ -23,5 +23,6 @@ export default {
     body: JSON.stringify({ settings: params.settings }),
     status: 201,
     data: params,
+    response: true,
   },
 };

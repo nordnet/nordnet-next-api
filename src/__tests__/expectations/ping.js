@@ -16,5 +16,6 @@ export default {
     url: '/api/2/ping',
     status: 200,
     data: 'pong',
+    response: true,
   },
 };
