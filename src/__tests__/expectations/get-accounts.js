@@ -14,7 +14,7 @@ export default {
   },
   expected: {
     url: '/api/2/accounts',
-    headers: { 'accept': 'application/json' },
+    headers: { 'accept': 'application/json', ntag: 'NO_NTAG_RECEIVED_YET' },
     method: 'get',
     credentials: true,
     body: undefined,

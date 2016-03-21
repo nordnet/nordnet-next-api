@@ -179,18 +179,14 @@ function buildParams(params = {}) {
 }
 
 function buildHeaders(method, headers) {
-  const sanitisedHeaders = convertKeysToLowerCase(headers);
-
-  if (method === 'post' || method === 'put') {
-    return Object.assign({ ntag: state.nTag }, postDefaultHeaders, sanitisedHeaders);
-  } else if (method === 'delete') {
-    return Object.assign({ ntag: state.nTag }, defaultHeaders, sanitisedHeaders);
-  }
-
-  return Object.assign({}, sanitisedHeaders, defaultHeaders);
+  return Object.assign({ ntag: state.nTag }, getDefaultMethodHeaders(method), sanitizeHeaders(headers));
 }
 
-function convertKeysToLowerCase(obj) {
+function getDefaultMethodHeaders(method) {
+  return method === 'post' || method === 'put' ? postDefaultHeaders : defaultHeaders;
+}
+
+function sanitizeHeaders(obj) {
   return Object.keys(obj).reduce(keyToLowerCase(obj), {});
 }
 
