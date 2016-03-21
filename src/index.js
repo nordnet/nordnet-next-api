@@ -1,14 +1,9 @@
+import 'babel-core/polyfill';
 import es6Promise from 'es6-promise';
 
 es6Promise.polyfill();
 
 import 'isomorphic-fetch';
-
-import merge from 'lodash/object/merge';
-import omit from 'lodash/object/omit';
-import keys from 'lodash/object/keys';
-import find from 'lodash/collection/find';
-import isPlainObject from 'lodash/lang/isPlainObject';
 
 const HTTP_NO_CONTENT = 204;
 const HTTP_BAD_REQUEST = 400;
@@ -18,7 +13,7 @@ const defaultHeaders = {
   accept: 'application/json',
 };
 
-const postDefaultHeaders = merge({
+const postDefaultHeaders = Object.assign({
   'content-type': 'application/x-www-form-urlencoded',
 }, defaultHeaders);
 
@@ -187,12 +182,12 @@ function buildHeaders(method, headers) {
   const sanitisedHeaders = convertKeysToLowerCase(headers);
 
   if (method === 'post' || method === 'put') {
-    return merge({ ntag: state.nTag }, postDefaultHeaders, sanitisedHeaders);
+    return Object.assign({ ntag: state.nTag }, postDefaultHeaders, sanitisedHeaders);
   } else if (method === 'delete') {
-    return merge({ ntag: state.nTag }, defaultHeaders, sanitisedHeaders);
+    return Object.assign({ ntag: state.nTag }, defaultHeaders, sanitisedHeaders);
   }
 
-  return merge({}, sanitisedHeaders, defaultHeaders);
+  return Object.assign({}, sanitisedHeaders, defaultHeaders);
 }
 
 function convertKeysToLowerCase(obj) {
@@ -215,7 +210,7 @@ function buildBody(method, params, headers) {
 }
 
 function isJsonContentType(headers) {
-  const contentType = find(keys(headers), contains('content-type'));
+  const contentType = Object.keys(headers).find(contains('content-type'));
   return isJSON(headers[contentType]);
 }
 
@@ -244,4 +239,22 @@ function contains(string) {
   return function(value) {
     return !!value && value.toLowerCase().indexOf(string) !== -1;
   };
+}
+
+function omit(source, props) {
+  return Object.keys(source).reduce(omitKey(source, props), {});
+}
+
+function omitKey(source, props) {
+  return (accumulator, key) => {
+    if (props.indexOf(key) === -1) {
+      accumulator[key] = source[key];
+    }
+
+    return accumulator;
+  };
+}
+
+function isPlainObject(obj) {
+  return obj !== null && typeof obj === 'object';
 }
