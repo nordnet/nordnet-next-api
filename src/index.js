@@ -15,11 +15,11 @@ const HTTP_BAD_REQUEST = 400;
 const HTTP_OK = 200;
 
 const defaultHeaders = {
-  Accept: 'application/json',
+  accept: 'application/json',
 };
 
 const postDefaultHeaders = merge({
-  'Content-type': 'application/x-www-form-urlencoded',
+  'content-type': 'application/x-www-form-urlencoded',
 }, defaultHeaders);
 
 const state = {
@@ -184,13 +184,26 @@ function buildParams(params = {}) {
 }
 
 function buildHeaders(method, headers) {
+  const sanitisedHeaders = convertKeysToLowerCase(headers);
+
   if (method === 'post' || method === 'put') {
-    return merge({ ntag: state.nTag }, postDefaultHeaders, headers);
+    return merge({ ntag: state.nTag }, postDefaultHeaders, sanitisedHeaders);
   } else if (method === 'delete') {
-    return merge({ ntag: state.nTag }, defaultHeaders, headers);
+    return merge({ ntag: state.nTag }, defaultHeaders, sanitisedHeaders);
   }
 
-  return merge({}, headers, defaultHeaders);
+  return merge({}, sanitisedHeaders, defaultHeaders);
+}
+
+function convertKeysToLowerCase(obj) {
+  return Object.keys(obj).reduce(keyToLowerCase(obj), {});
+}
+
+function keyToLowerCase(obj) {
+  return (accumulator, key) => {
+    accumulator[key.toLowerCase()] = obj[key];
+    return accumulator;
+  }
 }
 
 function buildBody(method, params, headers) {

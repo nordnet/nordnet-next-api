@@ -1,7 +1,7 @@
 import api from '../../index';
 
 const params = { key: 1, settings: { widgets: [{ id: 1, name: 'winners/losers' }] }};
-const headers = { 'Content-type': 'application/json' };
+const headers = { 'content-type': 'application/json' };
 
 export default {
   conditions: {
@@ -17,7 +17,7 @@ export default {
   },
   expected: {
     url: '/api/2/user/settings/1',
-    headers: { 'Content-type': 'application/json', Accept: 'application/json', ntag: 'NO_NTAG_RECEIVED_YET' },
+    headers: { 'content-type': 'application/json', accept: 'application/json', ntag: 'NO_NTAG_RECEIVED_YET' },
     method: 'post',
     credentials: true,
     body: JSON.stringify({ settings: params.settings }),

@@ -14,7 +14,7 @@ export default {
   },
   expected: {
     url: '/api/2/accounts',
-    headers: { 'Accept': 'application/json' },
+    headers: { 'accept': 'application/json' },
     method: 'get',
     credentials: true,
     body: undefined,

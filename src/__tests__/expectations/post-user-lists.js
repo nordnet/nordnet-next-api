@@ -18,7 +18,7 @@ export default {
   },
   expected: {
     url: '/api/2/user/lists',
-    headers: { 'Content-type': 'application/x-www-form-urlencoded', Accept: 'application/json', ntag: 'NO_NTAG_RECEIVED_YET' },
+    headers: { 'content-type': 'application/x-www-form-urlencoded', accept: 'application/json', ntag: 'NO_NTAG_RECEIVED_YET' },
     method: 'post',
     credentials: true,
     body: `name=${name}`,
