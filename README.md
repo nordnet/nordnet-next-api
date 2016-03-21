@@ -50,10 +50,14 @@ import api from 'nordnet-next-api';
 
 api
   .get('https://api.test.nordnet.se/next/2/accounts/{accno}', { accno: 123456789 })
-  .then(({ status, data }) => console.log(status, data));
+  .then(({ status, data, response }) => console.log(status, data, response));
 ```
 
-Returned response contains status (HTTP response status) and data (JSON parsed response).
+Returned response contains
+* `status` (HTTP response status)
+* `data` (either JSON or plain string depending on `Content-type` header)
+* `response` ([Response][response] interface of [Fetch API][fetch-api])
+
 
 ### Passing path parameters
 
@@ -127,6 +131,9 @@ This open source project released by Nordnet is licenced under the MIT licence.
 
 [api]: https://api.test.nordnet.se/
 [api-docs]: https://api.test.nordnet.se/api-docs/index.html
+
+[response]: https://developer.mozilla.org/en-US/docs/Web/API/Response
+[fetch-api]: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 
 [npm-url]: https://npmjs.org/package/nordnet-next-api
 [npm-image]: https://img.shields.io/npm/v/nordnet-next-api.svg
