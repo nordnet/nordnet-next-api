@@ -6,6 +6,7 @@ import 'isomorphic-fetch';
 
 const HTTP_NO_CONTENT = 204;
 const HTTP_BAD_REQUEST = 400;
+const regUrlParam = /{([\s\S]+?)}/g;
 
 const defaultHeaders = {
   accept: 'application/json',
@@ -73,7 +74,13 @@ export default {
 };
 
 function httpFetch(options) {
-  validateUrl(options.url);
+  if (!options.url) {
+    return Promise.reject(new Error(`Invalid url, got ${options.url}`));
+  }
+
+  if (isNotValidPath(options.url, options.params)) {
+    return Promise.reject(new Error(`Params doesn't have all required fiels for url. Got url ${options.url} and params ${JSON.stringify(options.params)}`));
+  }
 
   const path = buildPath(options.url, options.params);
   const params = omit(options.params, getPathParams(options.url));
@@ -133,14 +140,8 @@ function isJSON(contentType) {
   return contains('application/json')(contentType);
 }
 
-function validateUrl(url) {
-  if (!url) {
-    throw new Error('Invalid URL');
-  }
-}
-
 function getPathParams(url) {
-  const keys = url.match(/{([\s\S]+?)}/g) || [];
+  const keys = url.match(regUrlParam) || [];
   return keys.map(key => key.replace(/({|})/g, ''));
 }
 
@@ -158,16 +159,18 @@ function buildUrl(path, query = '') {
   return `${path}${delimiter}${queryParams}`;
 }
 
+function isNotValidPath(url, params) {
+  return !(url.match(regUrlParam) || [])
+    .map(key => key.replace(/({|})/g, ''))
+    .every(i => Object.keys(params).includes(i));
+}
+
 function buildPath(url, params) {
-  return url.replace(/{([\s\S]+?)}/g, matchParams(params));
+  return url.replace(regUrlParam, matchParams(params));
 }
 
 function matchParams(params) {
   return function matchParamKeyValue(match, key) {
-    if (params[key] === undefined) {
-      throw new Error(`unknown parameter ${key}`);
-    }
-
     return uriEncode(params[key]);
   };
 }
