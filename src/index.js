@@ -74,12 +74,12 @@ export default {
 };
 
 function httpFetch(options) {
-  if (!options.url) {
-    return Promise.reject(new Error(`Invalid url, got ${options.url}`));
+  if (!options.url) { // @TODO should check type
+    return Promise.reject(new Error(`Invalid url, got \`${options.url}\``));
   }
-
-  if (isNotValidPath(options.url, options.params)) {
-    return Promise.reject(new Error(`Params doesn't have all required fiels for url. Got url ${options.url} and params ${JSON.stringify(options.params)}`));
+  if (isNotValidPath(options.url, options.params)) { // @TODO should check types
+    // @TODO should have testcase in place
+    return Promise.reject(`Params object doesn't have all required keys for url. Got url \`${options.url}\` and params \`${JSON.stringify(options.params)}\``);
   }
 
   const path = buildPath(options.url, options.params);
