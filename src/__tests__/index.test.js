@@ -43,7 +43,7 @@ function testMethodRejected(condition) {
 }
 
 describe('api', function () {
-  describe('when url is invalid', testRejected([undefined, '',]));
+  describe('when url is invalid', testRejected([undefined, '']));
   describe('when required path params are missing', testRejected(['/api/2/accounts/{accno}']));
   describe('when request succeeded', test(tests.getInstrument));
   describe('when request failed', test(tests.getAccounts));
