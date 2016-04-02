@@ -85,7 +85,6 @@ function httpFetch(options) {
   }
 
   if (isNotValidPath(options.url, options.params)) { // @TODO should check types
-    // @TODO should have testcase in place
     return Promise.reject(new Error(`Params object doesn't have all required keys for url.
       Got url \`${options.url}\` and params \`${JSON.stringify(options.params)}\``));
   }
