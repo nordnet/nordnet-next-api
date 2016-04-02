@@ -43,6 +43,55 @@ app.get('/', function (req, res) {
 Authentication is required to be able to use nExt API. `Authorization` header can be used to pass session token when communicating to the API.
 See [nExt API documentation][api] for more details on how to get test account and authenticate against nExt API.
 
+## API
+
+* `api.get(url, params = {}, headers = {})`
+* `api.post(url, params = {}, headers = {})`
+* `api.put(url, params = {}, headers = {})`
+* `api.del(url, params = {}, headers = {})`
+
+Each method returns a Promise, which resolves or rejects with `Object { response, data, status }` where
+
+* `response`, Type `Object`, [Fetch API Response](https://developer.mozilla.org/en-US/docs/Web/API/Response)
+* `data`, Type `Object || String || (undefined if HTTP status === 204)`
+* `status`, Type `Number`, [HTTP status code](https://developer.mozilla.org/en-US/docs/Web/API/Response/status)
+
+Promise is rejected when HTTP status code is greater or equal 400.
+
+#### url
+
+*Required*  
+Type: `String`
+Example:
+
+* `/api/2/login`
+* `/api/2/accounts/{accno}`
+* `/api/2/instruments/{instrument_id}?positions={positions}`
+
+**`Note:` interpolated url params are taken from `params` argument. If `url` contains a key,
+which doesn't exist in `params`, promise will be rejected with `Error`.**
+
+#### params
+
+*Required*  
+Type: `Object`  
+Default: `{}`
+
+Object `params` is used to
+* interpolate `url` params.
+* if `headers` contains `"Content-type": "application/json"` for constructing request `payload`.
+* otherwise for constructing request body.
+
+#### headers
+
+*Required*  
+Type: `Object`  
+Default: `{}`
+
+See [Fetch API Headers](https://developer.mozilla.org/en-US/docs/Web/API/Headers)
+
+
+
 ### Basic usage
 
 ```js

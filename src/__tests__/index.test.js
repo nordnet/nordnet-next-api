@@ -33,19 +33,22 @@ function test({ conditions, expected }) {
   };
 }
 
-function testThrows(conditions) {
+function testRejected(conditions) {
   return function () {
-    conditions.forEach(condition => Object.keys(api).forEach(testMethodThrows(condition)));
+    conditions.forEach(condition => Object.keys(api).forEach(testMethodRejected(condition)));
   };
 }
 
-function testMethodThrows(condition) {
-  return method => it(`should throw an error with ${method} and url '${condition}'`,
-      () => expect(() => api[method](condition)).to.throw(Error));
+function testMethodRejected(done, condition) {
+  return method => it(`should reject an error with ${method} and url '${condition}'`,
+      () => api[method](condition)
+        .catch(reason => {
+          expect(reason).to.be.instanceof(Error);
+        }));
 }
 
 describe('api', function () {
-  describe('when url is invalid', testThrows([undefined, '', '/api/2/accounts/{accno}']));
+  describe('when url is empty', testRejected([undefined, '', '/api/2/accounts/{accno}']));
   describe('when request succeeded', test(tests.getInstrument));
   describe('when request failed', test(tests.getAccounts));
   describe('when response is not JSON', test(tests.ping));
