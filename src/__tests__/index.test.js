@@ -51,4 +51,5 @@ describe('api', function () {
   describe('when response is not JSON', test(tests.ping));
   describe('when making POST request', test(tests.postUserLists));
   describe('when making POST request with JSON payload', test(tests.postUserSettings));
+  describe('when making POST JSON request', test(tests.postJson));
 });

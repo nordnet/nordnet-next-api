@@ -43,6 +43,11 @@ export function post(url, params = {}, headers = {}) {
   return httpFetch(options);
 }
 
+export function postJson(url, params = {}, headers = {}) {
+  const merge = (one, two) => Object.assign({}, one, two);
+  return post(url, params, merge(headers, { 'Content-type': 'application/json' }));
+}
+
 export function put(url, params = {}, headers = {}) {
   const options = {
     url,
@@ -68,6 +73,7 @@ export function del(url, params = {}, headers = {}) {
 export default {
   get,
   post,
+  postJson,
   put,
   del,
 };
