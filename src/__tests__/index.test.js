@@ -34,21 +34,17 @@ function test({ conditions, expected }) {
 }
 
 function testRejected(conditions) {
-  return function () {
-    conditions.forEach(condition => Object.keys(api).forEach(testMethodRejected(condition)));
-  };
+  return () => conditions.forEach(condition => Object.keys(api).forEach(testMethodRejected(condition)));
 }
 
-function testMethodRejected(done, condition) {
-  return method => it(`should reject an error with ${method} and url '${condition}'`,
-      () => api[method](condition)
-        .catch(reason => {
-          expect(reason).to.be.instanceof(Error);
-        }));
+function testMethodRejected(condition) {
+  return method => it(`should reject promise with an error for ${method} and url '${condition}'`,
+      () => expect(api[method](condition)).to.be.rejectedWith(Error));
 }
 
 describe('api', function () {
-  describe('when url is empty', testRejected([undefined, '', '/api/2/accounts/{accno}']));
+  describe('when url is invalid', testRejected([undefined, '',]));
+  describe('when required path params are missing', testRejected(['/api/2/accounts/{accno}']));
   describe('when request succeeded', test(tests.getInstrument));
   describe('when request failed', test(tests.getAccounts));
   describe('when response is not JSON', test(tests.ping));
