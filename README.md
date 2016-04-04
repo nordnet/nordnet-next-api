@@ -47,6 +47,7 @@ See [nExt API documentation][api] for more details on how to get test account an
 
 * `api.get(url, params = {}, headers = {})`
 * `api.post(url, params = {}, headers = {})`
+* `api.postJson(url, params = {}, headers = {})` — `api.post` with `{ 'Content-type': 'application/json;' }` in headers
 * `api.put(url, params = {}, headers = {})`
 * `api.del(url, params = {}, headers = {})`
 
