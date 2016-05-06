@@ -22,7 +22,7 @@ export default {
     credentials: true,
     body: undefined,
     status: 201,
-    data: {code: 'NEXT_INVALID_SESSION'},
+    data: { code: 'NEXT_INVALID_SESSION' },
     response: true,
   },
 };
