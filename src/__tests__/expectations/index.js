@@ -4,6 +4,7 @@ import postUserSettings from './post-user-settings';
 import postUserLists from './post-user-lists';
 import postJson from './post-json';
 import ping from './ping';
+import forbidden from './forbidden';
 
 export default {
   getInstrument,
@@ -12,4 +13,5 @@ export default {
   postUserLists,
   postJson,
   ping,
+  forbidden,
 };

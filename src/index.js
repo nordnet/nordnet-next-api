@@ -111,13 +111,18 @@ function httpFetch(options) {
     .then(saveNTag)
     .then(processResponse);
 
-  const retry = () => fetch('/api/2/login')
+  const getNTag = () => fetch('/api/2/login')
     .then(validateStatus)
     .then(saveNTag);
 
-  return request().catch(response => {
+  /**
+   * If the response status code is 403, the reason may be
+   * an invalid ntag. Try to get a valid one, and retry the
+   * request.
+   */
+  return request().catch((response) => {
     if (response.status === HTTP_FORBIDDEN) {
-      return retry().then(request).catch(() => response);
+      return getNTag().then(request).catch(() => response);
     }
     return response;
   });
