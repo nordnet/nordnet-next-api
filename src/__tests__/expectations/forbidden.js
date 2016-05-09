@@ -21,7 +21,7 @@ export default {
     method: 'post',
     credentials: true,
     body: undefined,
-    status: 201,
+    status: 403,
     data: { code: 'NEXT_INVALID_SESSION' },
     response: true,
   },
