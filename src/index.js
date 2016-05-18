@@ -122,9 +122,11 @@ function httpFetch(options) {
    */
   return request().catch((response) => {
     if (response.status === HTTP_FORBIDDEN) {
-      return getNTag().then(request).catch(() => response);
+      return getNTag()
+        .then(request)
+        .catch(() => validateStatus(response));
     }
-    return response;
+    return validateStatus(response);
   });
 }
 
