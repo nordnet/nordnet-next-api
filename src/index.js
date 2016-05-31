@@ -23,6 +23,13 @@ const state = {
 
 const credentials = 'include';
 
+const config = {};
+const configKeys = ['root'];
+
+export function setConfig(options = {}) {
+  configKeys.forEach(key => config[key] = options[key]);
+}
+
 export function get(url, params = {}, headers = {}) {
   const options = {
     url,
@@ -78,6 +85,7 @@ export default {
   postJson,
   put,
   del,
+  setConfig,
 };
 
 function httpFetch(options) {
@@ -174,6 +182,12 @@ function getPathParams(url) {
 function buildUrl(path, query = '') {
   const queryParams = query.length ? query.join('&') : '';
   const pathContainsQuery = path.indexOf('?') !== -1;
+  const pathContainsProtocol = !!(path.match(/^http(s)?:\/\//));
+
+  let root = '';
+  if (!pathContainsProtocol && typeof config.root !== 'undefined') {
+    root = config.root;
+  }
 
   let delimiter = '';
   if (pathContainsQuery && queryParams) {
@@ -182,7 +196,7 @@ function buildUrl(path, query = '') {
     delimiter = '?';
   }
 
-  return `${path}${delimiter}${queryParams}`;
+  return `${root}${path}${delimiter}${queryParams}`;
 }
 
 function isNotValidPath(url, params = {}) {
