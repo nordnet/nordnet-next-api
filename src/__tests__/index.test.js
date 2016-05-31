@@ -34,7 +34,10 @@ function test({ conditions, expected }) {
 }
 
 function testRejected(conditions) {
-  return () => conditions.forEach(condition => Object.keys(api).forEach(testMethodRejected(condition)));
+  return () => conditions.forEach(
+    condition => Object.keys(api)
+      .filter(method => method !== 'setConfig')
+      .forEach(testMethodRejected(condition)));
 }
 
 function testMethodRejected(condition) {
