@@ -28,6 +28,10 @@ const configKeys = ['root'];
 
 export function setConfig(options = {}) {
   configKeys.forEach(key => config[key] = options[key]);
+
+  if (options.nTag) {
+    state.nTag = options.nTag;
+  }
 }
 
 export function get(url, params = {}, headers = {}) {
