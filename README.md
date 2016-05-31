@@ -119,6 +119,10 @@ api.get('/accounts/{accno}', { accno: 123456789 })
   .then(response => console.log(response));
 ```
 
+The following config keys are supported:
+* `root` sets base root URL
+* `nTag` set initial nTag value
+
 ### Passing path parameters
 
 ```js
