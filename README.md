@@ -49,6 +49,7 @@ See [nExt API documentation][api] for more details on how to get test account an
 * `api.post(url, params = {}, headers = {})`
 * `api.postJson(url, params = {}, headers = {})` — `api.post` with `{ 'Content-type': 'application/json;' }` in headers
 * `api.put(url, params = {}, headers = {})`
+* `api.putJson(url, params = {}, headers = {})` — `api.put` with `{ 'Content-type': 'application/json;' }` in headers
 * `api.del(url, params = {}, headers = {})`
 
 Each method returns a Promise, which resolves or rejects with `Object { response, data, status }` where

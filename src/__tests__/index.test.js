@@ -54,5 +54,6 @@ describe('api', function () {
   describe('when making POST request', test(tests.postUserLists));
   describe('when making POST request with JSON payload', test(tests.postUserSettings));
   describe('when making POST JSON request', test(tests.postJson));
+  describe('when making PUT JSON request', test(tests.putJson));
   describe.skip('when making POST JSON failed request', test(tests.forbidden));
 });
