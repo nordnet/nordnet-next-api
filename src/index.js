@@ -72,6 +72,11 @@ export function put(url, params = {}, headers = {}) {
   return httpFetch(options);
 }
 
+export function putJson(url, params = {}, headers = {}) {
+  const merge = (one, two) => Object.assign({}, one, two);
+  return put(url, params, merge(headers, { 'Content-type': 'application/json' }));
+}
+
 export function del(url, params = {}, headers = {}) {
   const options = {
     url,
@@ -88,6 +93,7 @@ export default {
   post,
   postJson,
   put,
+  putJson,
   del,
   setConfig,
 };
