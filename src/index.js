@@ -6,7 +6,6 @@ import 'isomorphic-fetch';
 
 const HTTP_NO_CONTENT = 204;
 const HTTP_BAD_REQUEST = 400;
-const HTTP_FORBIDDEN = 403;
 const regUrlParam = /{([\s\S]+?)}/g;
 
 const defaultHeaders = {
@@ -124,28 +123,10 @@ function httpFetch(options) {
     method: options.method,
   };
 
-  const request = () => fetch(fetchUrl, fetchParams)
+  return fetch(fetchUrl, fetchParams)
     .then(validateStatus)
     .then(saveNTag)
     .then(processResponse);
-
-  const getNTag = () => fetch('/api/2/login')
-    .then(validateStatus)
-    .then(saveNTag);
-
-  /**
-   * If the response status code is 403, the reason may be
-   * an invalid ntag. Try to get a valid one, and retry the
-   * request.
-   */
-  return request().catch((response) => {
-    if (response.status === HTTP_FORBIDDEN) {
-      return getNTag()
-        .then(request)
-        .catch(() => validateStatus(response));
-    }
-    return validateStatus(response);
-  });
 }
 
 function validateStatus(response) {
