@@ -23,7 +23,7 @@ const state = {
 const credentials = 'include';
 
 const config = {};
-const configKeys = ['root', 'clientId'];
+const configKeys = ['root'];
 
 export function setConfig(options = {}) {
   configKeys.forEach(key => config[key] = options[key]);
