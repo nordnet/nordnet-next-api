@@ -31,7 +31,7 @@ export function setConfig(options = {}) {
   if (options.nTag) {
     state.nTag = options.nTag;
   }
-  if(options.clientId){
+  if (options.clientId) {
     defaultHeaders['client-id'] = options.clientId;
   }
 }
