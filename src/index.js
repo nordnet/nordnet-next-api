@@ -31,6 +31,9 @@ export function setConfig(options = {}) {
   if (options.nTag) {
     state.nTag = options.nTag;
   }
+  if(options.clientId){
+    defaultHeaders['client-id'] = options.clientId;
+  }
 }
 
 export function get(url, params = {}, headers = {}) {
