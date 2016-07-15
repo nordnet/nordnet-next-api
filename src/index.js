@@ -23,13 +23,16 @@ const state = {
 const credentials = 'include';
 
 const config = {};
-const configKeys = ['root'];
+const configKeys = ['root', 'clientId'];
 
 export function setConfig(options = {}) {
   configKeys.forEach(key => config[key] = options[key]);
 
   if (options.nTag) {
     state.nTag = options.nTag;
+  }
+  if(options.clientId){
+    defaultHeaders['client-id'] = options.clientId;
   }
 }
 
