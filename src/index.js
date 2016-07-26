@@ -6,7 +6,6 @@ import 'isomorphic-fetch';
 
 const HTTP_NO_CONTENT = 204;
 const HTTP_BAD_REQUEST = 400;
-const HTTP_FORBIDDEN = 403;
 const regUrlParam = /{([\s\S]+?)}/g;
 
 const defaultHeaders = {
@@ -22,6 +21,20 @@ const state = {
 };
 
 const credentials = 'include';
+
+const config = {};
+const configKeys = ['root'];
+
+export function setConfig(options = {}) {
+  configKeys.forEach(key => config[key] = options[key]);
+
+  if (options.nTag) {
+    state.nTag = options.nTag;
+  }
+  if (options.clientId) {
+    defaultHeaders['client-id'] = options.clientId;
+  }
+}
 
 export function get(url, params = {}, headers = {}) {
   const options = {
@@ -61,6 +74,11 @@ export function put(url, params = {}, headers = {}) {
   return httpFetch(options);
 }
 
+export function putJson(url, params = {}, headers = {}) {
+  const merge = (one, two) => Object.assign({}, one, two);
+  return put(url, params, merge(headers, { 'Content-type': 'application/json' }));
+}
+
 export function del(url, params = {}, headers = {}) {
   const options = {
     url,
@@ -77,7 +95,9 @@ export default {
   post,
   postJson,
   put,
+  putJson,
   del,
+  setConfig,
 };
 
 function httpFetch(options) {
@@ -106,26 +126,10 @@ function httpFetch(options) {
     method: options.method,
   };
 
-  const request = () => fetch(fetchUrl, fetchParams)
+  return fetch(fetchUrl, fetchParams)
     .then(validateStatus)
     .then(saveNTag)
     .then(processResponse);
-
-  const getNTag = () => fetch('/api/2/login')
-    .then(validateStatus)
-    .then(saveNTag);
-
-  /**
-   * If the response status code is 403, the reason may be
-   * an invalid ntag. Try to get a valid one, and retry the
-   * request.
-   */
-  return request().catch((response) => {
-    if (response.status === HTTP_FORBIDDEN) {
-      return getNTag().then(request).catch(() => response);
-    }
-    return response;
-  });
 }
 
 function validateStatus(response) {
@@ -172,6 +176,12 @@ function getPathParams(url) {
 function buildUrl(path, query = '') {
   const queryParams = query.length ? query.join('&') : '';
   const pathContainsQuery = path.indexOf('?') !== -1;
+  const pathContainsProtocol = !!(path.match(/^http(s)?:\/\//));
+
+  let root = '';
+  if (!pathContainsProtocol && typeof config.root !== 'undefined') {
+    root = config.root;
+  }
 
   let delimiter = '';
   if (pathContainsQuery && queryParams) {
@@ -180,7 +190,7 @@ function buildUrl(path, query = '') {
     delimiter = '?';
   }
 
-  return `${path}${delimiter}${queryParams}`;
+  return `${root}${path}${delimiter}${queryParams}`;
 }
 
 function isNotValidPath(url, params = {}) {

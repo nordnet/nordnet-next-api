@@ -1,5 +1,5 @@
 import React from 'react';
-import { get } from 'nordnet-next-api';
+import { get, setConfig } from 'nordnet-next-api';
 
 class Status extends React.Component {
 

@@ -49,6 +49,7 @@ See [nExt API documentation][api] for more details on how to get test account an
 * `api.post(url, params = {}, headers = {})`
 * `api.postJson(url, params = {}, headers = {})` — `api.post` with `{ 'Content-type': 'application/json;' }` in headers
 * `api.put(url, params = {}, headers = {})`
+* `api.putJson(url, params = {}, headers = {})` — `api.put` with `{ 'Content-type': 'application/json;' }` in headers
 * `api.del(url, params = {}, headers = {})`
 
 Each method returns a Promise, which resolves or rejects with `Object { response, data, status }` where
@@ -108,6 +109,21 @@ Returned response contains
 * `data` (either JSON or plain string depending on `Content-type` header)
 * `response` ([Response][response] interface of [Fetch API][fetch-api])
 
+### Setting root URL before querying
+
+```js
+import api from 'nordnet-next-api';
+
+api.setConfig({ root: 'https://api.test.nordnet.se/next/2' });
+
+api.get('/accounts/{accno}', { accno: 123456789 })
+  .then(response => console.log(response));
+```
+
+The following config keys are supported:
+* `root` sets base root URL
+* `nTag` set initial nTag value
+* `clientId` set the client-id default header
 
 ### Passing path parameters
 
@@ -152,9 +168,10 @@ See tests under `src/__tests__` for more examples.
 
 nordnet-next-api is distributed with a two simple example projects.
 
-First, build the project:
+Before proceeding, install dependencies and build the project:
 
 ```
+npm install
 npm run build
 ```
 
@@ -176,7 +193,7 @@ npm start
 
 ## License
 
-This open source project released by Nordnet is licenced under the MIT licence.
+This Open Source project released by Nordnet is licensed under the MIT license.
 
 
 [api]: https://api.test.nordnet.se/
