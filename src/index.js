@@ -161,7 +161,14 @@ function parseContent(response) {
   const contentType = response.headers.get('Content-type');
   const method = isJSON(contentType) ? 'json' : 'text';
 
-  return response[method]().then(data => ({ response, data, status: response.status }));
+  return response[method]()
+    .then(data => ({ response, data, status: response.status }))
+    .catch(error => Promise.reject({
+      response,
+      status: response.status,
+      error: new Error(`fetch unable to parse input, most likely API responded with empty reponse.
+        Original Error: ${error}`)
+    }));
 }
 
 function isJSON(contentType) {
