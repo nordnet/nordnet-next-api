@@ -167,7 +167,7 @@ function parseContent(response) {
       response,
       status: response.status,
       error: new Error(`fetch unable to parse input, most likely API responded with empty reponse.
-        Original Error: ${error}`)
+        Original Error: ${error}`),
     }));
 }
 
