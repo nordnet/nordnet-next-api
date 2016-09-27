@@ -12,9 +12,11 @@ const defaultHeaders = {
   accept: 'application/json',
 };
 
-const postDefaultHeaders = Object.assign({
-  'content-type': 'application/x-www-form-urlencoded',
-}, defaultHeaders);
+function postDefaultHeaders() {
+  return Object.assign({
+    'content-type': 'application/x-www-form-urlencoded',
+  }, defaultHeaders);
+}
 
 const state = {
   nTag: 'NO_NTAG_RECEIVED_YET',
@@ -225,7 +227,7 @@ function buildHeaders(method, headers) {
 }
 
 function getDefaultMethodHeaders(method) {
-  return method === 'post' || method === 'put' ? postDefaultHeaders : defaultHeaders;
+  return method === 'post' || method === 'put' ? postDefaultHeaders() : defaultHeaders;
 }
 
 function sanitizeHeaders(obj) {
