@@ -8,14 +8,17 @@ const HTTP_NO_CONTENT = 204;
 const HTTP_BAD_REQUEST = 400;
 const regUrlParam = /{([\s\S]+?)}/g;
 
+const merge = (one, two) => Object.assign({}, one, two);
+
 const defaultHeaders = {
   accept: 'application/json',
 };
 
 function postDefaultHeaders() {
-  return Object.assign({
-    'content-type': 'application/x-www-form-urlencoded',
-  }, defaultHeaders);
+  return merge(
+    { 'content-type': 'application/x-www-form-urlencoded' },
+    defaultHeaders
+  );
 }
 
 const state = {
@@ -61,7 +64,6 @@ export function post(url, params = {}, headers = {}) {
 }
 
 export function postJson(url, params = {}, headers = {}) {
-  const merge = (one, two) => Object.assign({}, one, two);
   return post(url, params, merge(headers, { 'Content-type': 'application/json' }));
 }
 
@@ -77,7 +79,6 @@ export function put(url, params = {}, headers = {}) {
 }
 
 export function putJson(url, params = {}, headers = {}) {
-  const merge = (one, two) => Object.assign({}, one, two);
   return put(url, params, merge(headers, { 'Content-type': 'application/json' }));
 }
 
