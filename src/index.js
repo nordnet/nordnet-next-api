@@ -8,13 +8,18 @@ const HTTP_NO_CONTENT = 204;
 const HTTP_BAD_REQUEST = 400;
 const regUrlParam = /{([\s\S]+?)}/g;
 
+const merge = (one, two) => Object.assign({}, one, two);
+
 const defaultHeaders = {
   accept: 'application/json',
 };
 
-const postDefaultHeaders = Object.assign({
-  'content-type': 'application/x-www-form-urlencoded',
-}, defaultHeaders);
+function postDefaultHeaders() {
+  return merge(
+    { 'content-type': 'application/x-www-form-urlencoded' },
+    defaultHeaders
+  );
+}
 
 const state = {
   nTag: 'NO_NTAG_RECEIVED_YET',
@@ -59,7 +64,6 @@ export function post(url, params = {}, headers = {}) {
 }
 
 export function postJson(url, params = {}, headers = {}) {
-  const merge = (one, two) => Object.assign({}, one, two);
   return post(url, params, merge(headers, { 'Content-type': 'application/json' }));
 }
 
@@ -75,7 +79,6 @@ export function put(url, params = {}, headers = {}) {
 }
 
 export function putJson(url, params = {}, headers = {}) {
-  const merge = (one, two) => Object.assign({}, one, two);
   return put(url, params, merge(headers, { 'Content-type': 'application/json' }));
 }
 
@@ -225,7 +228,7 @@ function buildHeaders(method, headers) {
 }
 
 function getDefaultMethodHeaders(method) {
-  return method === 'post' || method === 'put' ? postDefaultHeaders : defaultHeaders;
+  return method === 'post' || method === 'put' ? postDefaultHeaders() : defaultHeaders;
 }
 
 function sanitizeHeaders(obj) {
