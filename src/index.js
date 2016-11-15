@@ -8,14 +8,12 @@ const HTTP_NO_CONTENT = 204;
 const HTTP_BAD_REQUEST = 400;
 const regUrlParam = /{([\s\S]+?)}/g;
 
-const merge = (one, two) => Object.assign({}, one, two);
-
 const defaultHeaders = {
   accept: 'application/json',
 };
 
 function postDefaultHeaders() {
-  return merge(
+  return Object.assign(
     { 'content-type': 'application/x-www-form-urlencoded' },
     defaultHeaders
   );
@@ -28,7 +26,7 @@ const state = {
 const credentials = 'include';
 
 const config = {};
-const configKeys = ['root'];
+const configKeys = ['root', 'agent'];
 
 export function setConfig(options = {}) {
   configKeys.forEach(key => config[key] = options[key]);
@@ -41,56 +39,56 @@ export function setConfig(options = {}) {
   }
 }
 
-export function get(url, params = {}, headers = {}) {
-  const options = {
+export function get(url, params = {}, headers = {}, options = {}) {
+  const fetchOptions = Object.assign({
     url,
     params,
     headers,
     method: 'get',
-  };
+  }, options);
 
-  return httpFetch(options);
+  return httpFetch(fetchOptions);
 }
 
-export function post(url, params = {}, headers = {}) {
-  const options = {
+export function post(url, params = {}, headers = {}, options = {}) {
+  const fetchOptions = Object.assign({
     url,
     params,
     headers,
     method: 'post',
-  };
+  }, options);
 
-  return httpFetch(options);
+  return httpFetch(fetchOptions);
 }
 
-export function postJson(url, params = {}, headers = {}) {
-  return post(url, params, merge(headers, { 'Content-type': 'application/json' }));
+export function postJson(url, params = {}, headers = {}, options = {}) {
+  return post(url, params, Object.assign(headers, { 'Content-type': 'application/json' }, options));
 }
 
-export function put(url, params = {}, headers = {}) {
-  const options = {
+export function put(url, params = {}, headers = {}, options = {}) {
+  const fetchOptions = Object.assign({
     url,
     params,
     headers,
     method: 'put',
-  };
+  }, options);
 
-  return httpFetch(options);
+  return httpFetch(fetchOptions);
 }
 
-export function putJson(url, params = {}, headers = {}) {
-  return put(url, params, merge(headers, { 'Content-type': 'application/json' }));
+export function putJson(url, params = {}, headers = {}, options = {}) {
+  return put(url, params, Object.assign(headers, { 'Content-type': 'application/json' }, options));
 }
 
-export function del(url, params = {}, headers = {}) {
-  const options = {
+export function del(url, params = {}, headers = {}, options = {}) {
+  const fetchOptions = Object.assign({
     url,
     params,
     headers,
     method: 'delete',
-  };
+  }, options);
 
-  return httpFetch(options);
+  return httpFetch(fetchOptions);
 }
 
 export default {
@@ -128,6 +126,12 @@ function httpFetch(options) {
     body,
     method: options.method,
   };
+
+  if (options.agent) {
+    Object.assign(fetchParams, { agent: options.agent });
+  } else if (config.agent) {
+    Object.assign(fetchParams, { agent: config.agent });
+  }
 
   return fetch(fetchUrl, fetchParams)
     .then(validateStatus)

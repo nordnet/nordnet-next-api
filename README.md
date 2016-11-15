@@ -163,6 +163,29 @@ get('https://api.test.nordnet.se/next/2/markets/{market_id}', { market_id: 11 },
 
 See tests under `src/__tests__` for more examples.
 
+### Passing custom HTTP agent
+```js
+import http from 'http';
+import { get } from 'nordnet-next-api';
+
+const agent = new http.Agent();
+
+get('https://api.test.nordnet.se/next/2/markets/{market_id}', { market_id: 11 }, { 'Accept-Language': 'sv' }, { agent })
+  .then(({ status, data }) => console.log(status, data));
+```
+
+### Setting up default HTTP agent
+```js
+import http from 'http';
+import api from 'nordnet-next-api';
+
+const agent = new http.Agent();
+
+api.setConfig({ agent });
+
+get('https://api.test.nordnet.se/next/2/markets/{market_id}', { market_id: 11 }, { 'Accept-Language': 'sv' })
+  .then(({ status, data }) => console.log(status, data));
+```
 
 ## Example projects
 
