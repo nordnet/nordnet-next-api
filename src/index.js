@@ -1,7 +1,3 @@
-import es6Promise from 'es6-promise';
-
-es6Promise.polyfill();
-
 import 'isomorphic-fetch';
 
 const HTTP_NO_CONTENT = 204;
