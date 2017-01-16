@@ -43,6 +43,20 @@ app.get('/', function (req, res) {
 Authentication is required to be able to use nExt API. `Authorization` header can be used to pass session token when communicating to the API.
 See [nExt API documentation][api] for more details on how to get test account and authenticate against nExt API.
 
+### This lib does not use babel-polyfill, so you might have to add it yourself, e.g. if you are building for IE11.
+
+In you application:
+```js
+import 'babel-polyfill'; // at your application entry point
+```
+
+Or in webpack.config.js
+```js
+{
+  entry: ['babel-polyfill', 'your_app_entry.js']
+}
+```
+
 ## API
 
 * `api.get(url, params = {}, headers = {})`
