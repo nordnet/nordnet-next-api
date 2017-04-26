@@ -164,7 +164,7 @@ function parseContent(response) {
   const contentType = response.headers.get('Content-type');
   let method = isJSON(contentType) ? 'json' : 'text';
 
-  if (isPDF(contentType)) {
+  if (isBlob(contentType)) {
     method = 'blob';
   }
 
@@ -182,7 +182,7 @@ function isJSON(contentType) {
   return contains('application/json')(contentType);
 }
 
-function isPDF(contentType) {
+function isBlob(contentType) {
   return contains('application/pdf')(contentType);
 }
 
