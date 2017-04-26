@@ -162,7 +162,11 @@ function processResponse(response) {
 
 function parseContent(response) {
   const contentType = response.headers.get('Content-type');
-  const method = isJSON(contentType) ? 'json' : 'text';
+  let method = isJSON(contentType) ? 'json' : 'text';
+
+  if (isPDF(contentType)) {
+    method = 'blob';
+  }
 
   return response[method]()
     .then(data => ({ response, data, status: response.status }))
@@ -176,6 +180,10 @@ function parseContent(response) {
 
 function isJSON(contentType) {
   return contains('application/json')(contentType);
+}
+
+function isPDF(contentType) {
+  return contains('application/pdf')(contentType);
 }
 
 function getPathParams(url) {
