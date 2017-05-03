@@ -16,7 +16,7 @@ function postDefaultHeaders() {
 }
 
 const state = {
-  nTag: 'NO_NTAG_RECEIVED_YET',
+  ntag: 'NO_NTAG_RECEIVED_YET',
 };
 
 const credentials = 'include';
@@ -25,13 +25,15 @@ const config = {};
 const configKeys = ['root', 'agent'];
 
 export function setConfig(options = {}) {
+  // HTTP headers should be lowercase, but we support camelCase for backwards compatibility
+  const lowerCaseOptions = sanitizeHeaders(options);
   configKeys.forEach(key => config[key] = options[key]);
 
-  if (options.nTag) {
-    state.nTag = options.nTag;
+  if (lowerCaseOptions.ntag) {
+    state.ntag = lowerCaseOptions.ntag;
   }
-  if (options.clientId) {
-    defaultHeaders['client-id'] = options.clientId;
+  if (lowerCaseOptions.clientid) {
+    defaultHeaders['client-id'] = lowerCaseOptions.clientid;
   }
 }
 
@@ -148,7 +150,7 @@ function toErrorResponse(response) {
 }
 
 function saveNTag(response) {
-  state.nTag = response.headers.get('ntag') || state.nTag;
+  state.ntag = response.headers.get('ntag') || state.ntag;
   return response;
 }
 
@@ -224,7 +226,7 @@ function buildParams(params = {}) {
 }
 
 function buildHeaders(method, headers) {
-  return Object.assign({ ntag: state.nTag }, getDefaultMethodHeaders(method), sanitizeHeaders(headers));
+  return Object.assign({ ntag: state.ntag }, getDefaultMethodHeaders(method), sanitizeHeaders(headers));
 }
 
 function getDefaultMethodHeaders(method) {
