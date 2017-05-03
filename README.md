@@ -136,8 +136,8 @@ api.get('/accounts/{accno}', { accno: 123456789 })
 
 The following config keys are supported:
 * `root` sets base root URL
-* `nTag` set initial nTag value
-* `clientId` set the client-id default header
+* `ntag` set initial nTag value
+* `clientid` set the client-id default header
 
 ### Passing path parameters
 
