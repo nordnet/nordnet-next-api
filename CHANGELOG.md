@@ -3,9 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Upcoming
+## 5.1.0
 
 * Support PDF
+* Supports lowercase ntag and clientid as options. Still backward compatible.
 
 ## 5.0.0
 
