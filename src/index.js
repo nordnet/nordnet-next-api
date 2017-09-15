@@ -216,7 +216,7 @@ function buildUrl(path, query = '') {
 function isNotValidPath(url, params = {}) {
   return !!(url.match(regUrlParam) || [])
     .map(key => key.replace(/({|})/g, ''))
-    .find(key => !params[key]);
+    .find(key => !params[key] && params[key] !== 0);
 }
 
 function buildPath(url, params) {
