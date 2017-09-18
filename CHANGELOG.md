@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 5.1.1 (2017-09-18)
+
+* Support `0` as a valid path parameter value. Example:
+
+```
+url: '/api-url/{score}',
+params: {
+  score,
+},
+```
+
 ## 5.1.0
 
 * Support PDF
