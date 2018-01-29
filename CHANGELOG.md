@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Upcoming
+* Add yarn support
+
 ## 5.1.1 (2017-09-18)
 
 * Support `0` as a valid path parameter value. Example:
