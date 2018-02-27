@@ -35,6 +35,10 @@ export function setConfig(options = {}) {
   if (lowerCaseOptions.clientid) {
     defaultHeaders['client-id'] = lowerCaseOptions.clientid;
   }
+
+  if (lowerCaseOptions.referrerapp) {
+    defaultHeaders.referrerApp = lowerCaseOptions.referrerapp;
+  }
 }
 
 export function get(url, params = {}, headers = {}, options = {}) {
