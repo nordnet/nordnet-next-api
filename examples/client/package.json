@@ -10,7 +10,7 @@
     "proxy_server": {
       "host": "localhost",
       "port": 9090,
-      "forward_to": "https://api.test.nordnet.se"
+      "forward_to": "https://www.nordnet.se"
     }
   },
   "author": "Dmitry Demyankov",
