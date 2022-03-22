@@ -23,7 +23,7 @@ Library can be used on the client and server side.
 import api from 'nordnet-next-api';
 
 api
-  .get('https://api.test.nordnet.se/next/2')
+  .get('https://www.nordnet.se/next/2')
   .then(({ status, data }) => console.log(status, data));
 ```
 
@@ -33,7 +33,7 @@ var express = require('express');
 var app = express();
 
 app.get('/', function (req, res) {
-  api.get('https://api.test.nordnet.se/next/2')
+  api.get('https://www.nordnet.se/next/2')
     .then(function(response) {
       res.send(response);
   })
@@ -114,7 +114,7 @@ See [Fetch API Headers](https://developer.mozilla.org/en-US/docs/Web/API/Headers
 import api from 'nordnet-next-api';
 
 api
-  .get('https://api.test.nordnet.se/next/2/accounts/{accno}', { accno: 123456789 })
+  .get('https://www.nordnet.se/next/2/accounts/{accno}', { accno: 123456789 })
   .then(({ status, data, response }) => console.log(status, data, response));
 ```
 
@@ -128,7 +128,7 @@ Returned response contains
 ```js
 import api from 'nordnet-next-api';
 
-api.setConfig({ root: 'https://api.test.nordnet.se/next/2' });
+api.setConfig({ root: 'https://www.nordnet.se/next/2' });
 
 api.get('/accounts/{accno}', { accno: 123456789 })
   .then(response => console.log(response));
@@ -144,7 +144,7 @@ The following config keys are supported:
 ```js
 import { get } from 'nordnet-next-api';
 
-get('https://api.test.nordnet.se/next/2/accounts/{accno}', { accno: 123456789 })
+get('https://www.nordnet.se/next/2/accounts/{accno}', { accno: 123456789 })
   .then(({ status, data }) => console.log(status, data));
 ```
 
@@ -153,7 +153,7 @@ get('https://api.test.nordnet.se/next/2/accounts/{accno}', { accno: 123456789 })
 ```js
 import { get } from 'nordnet-next-api';
 
-get('https://api.test.nordnet.se/next/2/news?days={days}', { days: 0 })
+get('https://www.nordnet.se/next/2/news?days={days}', { days: 0 })
   .then(({ status, data }) => console.log(status, data));
 ```
 
@@ -162,7 +162,7 @@ get('https://api.test.nordnet.se/next/2/news?days={days}', { days: 0 })
 ```js
 import { post } from 'nordnet-next-api';
 
-post('https://api.test.nordnet.se/next/2/user/{key}', { key: 'foo', value: { bar: 'bar' }})
+post('https://www.nordnet.se/next/2/user/{key}', { key: 'foo', value: { bar: 'bar' }})
   .then(({ status, data }) => console.log(status, data));
 ```
 
@@ -171,7 +171,7 @@ post('https://api.test.nordnet.se/next/2/user/{key}', { key: 'foo', value: { bar
 ```js
 import { get } from 'nordnet-next-api';
 
-get('https://api.test.nordnet.se/next/2/markets/{market_id}', { market_id: 11 }, { 'Accept-Language': 'sv' })
+get('https://www.nordnet.se/next/2/markets/{market_id}', { market_id: 11 }, { 'Accept-Language': 'sv' })
   .then(({ status, data }) => console.log(status, data));
 ```
 
@@ -184,7 +184,7 @@ import { get } from 'nordnet-next-api';
 
 const agent = new http.Agent();
 
-get('https://api.test.nordnet.se/next/2/markets/{market_id}', { market_id: 11 }, { 'Accept-Language': 'sv' }, { agent })
+get('https://www.nordnet.se/next/2/markets/{market_id}', { market_id: 11 }, { 'Accept-Language': 'sv' }, { agent })
   .then(({ status, data }) => console.log(status, data));
 ```
 
@@ -197,7 +197,7 @@ const agent = new http.Agent();
 
 api.setConfig({ agent });
 
-get('https://api.test.nordnet.se/next/2/markets/{market_id}', { market_id: 11 }, { 'Accept-Language': 'sv' })
+get('https://www.nordnet.se/next/2/markets/{market_id}', { market_id: 11 }, { 'Accept-Language': 'sv' })
   .then(({ status, data }) => console.log(status, data));
 ```
 
@@ -233,8 +233,8 @@ npm start
 This Open Source project released by Nordnet is licensed under the MIT license.
 
 
-[api]: https://api.test.nordnet.se/
-[api-docs]: https://api.test.nordnet.se/api-docs/index.html
+[api]: https://www.nordnet.se/
+[api-docs]: https://www.nordnet.se/externalapi/docs/
 
 [response]: https://developer.mozilla.org/en-US/docs/Web/API/Response
 [fetch-api]: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API

@@ -3,7 +3,7 @@ var express = require('express');
 var app = express();
 
 app.get('/', function (req, res) {
-  api.get('https://api.test.nordnet.se/next/2').then(function(response) {
+  api.get('https://www.nordnet.se/next/2').then(function(response) {
     res.send(response);
   })
 });
