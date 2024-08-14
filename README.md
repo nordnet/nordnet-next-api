@@ -1,3 +1,5 @@
+# This repository and its contents is deprecated and will see no further development.
+
 # Nordnet nExt API Javascript client
 
 [![NPM version][npm-image]][npm-url]
